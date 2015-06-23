@@ -433,7 +433,7 @@ void DrawRectLayer::myupdate()
 {
 	char str[100];
 
-	if (std::abs(Endpoint.x - Startpoint.x) >= 5 && std::abs(Endpoint.y - Startpoint.y) >= 5)
+	if (std::abs(Endpoint.x - Startpoint.x) >= 15 || std::abs(Endpoint.y - Startpoint.y) >= 15)
 	{
 		float _ROTATE;
 		if (_QtEdit->Ctrl_Is_On)
