@@ -572,22 +572,7 @@ void QtEdit::closeEvent(QCloseEvent *event)
 		default:
 			break;
 		}
-		//QMessageBox::about(NULL, "About Edit", codec->toUnicode(showabout.c_str()));
-		//QMessageBox::StandardButton rb = QMessageBox::question(NULL, "information", codec->toUnicode(showabout.c_str()), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-		//QMessageBox::warning(this, "Warning", tr("Save changes to document?"),
-		//	QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Save)
-		//if (rb == QMessageBox::Yes)
-		//{
-		//	//import();
-		//	cocos2d::Director::getInstance()->end();
-		//	exit(0);
-		//	qApp->quit();
-		//	event->accept();  //接受退出信号，程序退出
-		//}
-		//else
-		//{
-		//	event->ignore();  //忽略退出信号，程序继续运行
-		//}
+		
 	}
 	else
 	{
@@ -596,17 +581,6 @@ void QtEdit::closeEvent(QCloseEvent *event)
 		qApp->quit();
 		event->accept();  //接受退出信号，程序退出
 	}
-	//QMessageBox::StandardButton button;
-	//button = QMessageBox::question(this, tr("退出程序"),
-	//	QString(tr("警告：程序有一个任务正在运行中，是否结束操作退出?")),
-	//	QMessageBox::Yes | QMessageBox::No);
-
-	//if (button == QMessageBox::No) {
-	//	event->ignore();  //忽略退出信号，程序继续运行
-	//}
-	//else if (button == QMessageBox::Yes) {
-	//	event->accept();  //接受退出信号，程序退出
-	//}
 }
 void QtEdit::setGLView(QWidget *glWidget)
 {
