@@ -545,20 +545,49 @@ void QtEdit::closeEvent(QCloseEvent *event)
 	if (this->windowTitle().indexOf("*") != -1)
 	{
 		std::string showabout = "当前未保存是否退出?";
-		//QMessageBox::about(NULL, "About Edit", codec->toUnicode(showabout.c_str()));
-		QMessageBox::StandardButton rb = QMessageBox::question(NULL, "information", codec->toUnicode(showabout.c_str()), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-		if (rb == QMessageBox::Yes)
+		switch (QMessageBox::warning(this, codec->toUnicode("警告"), codec->toUnicode(showabout.c_str()),
+			QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Save))
 		{
-			//import();
+		case QMessageBox::Save:
+			//label->setText(" Warning button / Save ");
+			_Export_Data = Export_Data::getInstence();
+			_Export_Data->DrawDataTo_Qtedit();
+			_Export_Data->Dosave_JsonData(saveDataName.toStdString().c_str(), spritesPoints, true);
 			cocos2d::Director::getInstance()->end();
 			exit(0);
 			qApp->quit();
 			event->accept();  //接受退出信号，程序退出
-		}
-		else
-		{
+			break;
+		case QMessageBox::Discard:
+			//label->setText(" Warning button / Discard ");
+			cocos2d::Director::getInstance()->end();
+			exit(0);
+			qApp->quit();
+			event->accept();  //接受退出信号，程序退出
+			break;
+		case QMessageBox::Cancel:
+			//label->setText(" Warning button / Cancel ");
 			event->ignore();  //忽略退出信号，程序继续运行
+			break;
+		default:
+			break;
 		}
+		//QMessageBox::about(NULL, "About Edit", codec->toUnicode(showabout.c_str()));
+		//QMessageBox::StandardButton rb = QMessageBox::question(NULL, "information", codec->toUnicode(showabout.c_str()), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+		//QMessageBox::warning(this, "Warning", tr("Save changes to document?"),
+		//	QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Save)
+		//if (rb == QMessageBox::Yes)
+		//{
+		//	//import();
+		//	cocos2d::Director::getInstance()->end();
+		//	exit(0);
+		//	qApp->quit();
+		//	event->accept();  //接受退出信号，程序退出
+		//}
+		//else
+		//{
+		//	event->ignore();  //忽略退出信号，程序继续运行
+		//}
 	}
 	else
 	{
