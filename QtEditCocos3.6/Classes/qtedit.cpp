@@ -718,13 +718,8 @@ void QtEdit::ActionHelp()
 
 void QtEdit::openData()
 {
-	//ShowMsg("Open");
-	//WinExec("cmd /f F:\QT\private\QtEdit\Debug.win32\FBXExportcocos.bat", SW_HIDE);
-	//system("F:\QT\private\QtEdit\Debug.win32\Start.bat");
 	QDir dir;
-	//QString path = dir.currentPath();
 	std::sprintf(myshowstr, "cmd   /c   %s/RunScore/StartFBXToCocos.bat", dir.currentPath().toStdString().c_str());
-	//WinExec("cmd   /c   " +  + "/Start.bat", SW_HIDE);
 	WinExec(myshowstr, SW_HIDE);
 }
 void QtEdit::import()
