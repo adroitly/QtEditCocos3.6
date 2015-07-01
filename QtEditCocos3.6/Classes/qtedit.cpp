@@ -855,7 +855,7 @@ void QtEdit::Init()
 	_MyData = QByteArray::fromBase64(file.readAll());
 	file.close();
 	int i, j;
-	int ex, ey, sx, sy;
+	double ex, ey, sx, sy;
 	double _wi, _he, _sclx, _scly;
 	float rotate;
 	QString oneJieDian;
@@ -905,10 +905,10 @@ void QtEdit::Init()
 							if (per_Obj.contains("att"))
 							{
 								QJsonObject att_Obj = per_Obj.value("att").toObject();
-								sx = att_Obj.value("sx").toInt();
-								sy = att_Obj.value("sy").toInt();
-								ex = att_Obj.value("ex").toInt();
-								ey = att_Obj.value("ey").toInt();
+								sx = att_Obj.value("sx").toDouble();
+								sy = att_Obj.value("sy").toDouble();
+								ex = att_Obj.value("ex").toDouble();
+								ey = att_Obj.value("ey").toDouble();
 								rotate = att_Obj.value("ro").toDouble();
 								Vec2 spoint(sx , sy);
 								Vec2 epoint(ex, ey);
@@ -919,10 +919,10 @@ void QtEdit::Init()
 							if (per_Obj.contains("inj"))
 							{
 								QJsonObject inj_Obj = per_Obj.value("inj").toObject();
-								sx = inj_Obj.value("sx").toInt();
-								sy = inj_Obj.value("sy").toInt();
-								ex = inj_Obj.value("ex").toInt();
-								ey = inj_Obj.value("ey").toInt();
+								sx = inj_Obj.value("sx").toDouble();
+								sy = inj_Obj.value("sy").toDouble();
+								ex = inj_Obj.value("ex").toDouble();
+								ey = inj_Obj.value("ey").toDouble();
 								rotate = inj_Obj.value("ro").toDouble();
 								Vec2 spoint(sx, sy);
 								Vec2 epoint(ex, ey);
@@ -933,10 +933,10 @@ void QtEdit::Init()
 							if (per_Obj.contains("body"))
 							{
 								QJsonObject body_Obj = per_Obj.value("body").toObject();
-								sx = body_Obj.value("sx").toInt();
-								sy = body_Obj.value("sy").toInt();
-								ex = body_Obj.value("ex").toInt();
-								ey = body_Obj.value("ey").toInt();
+								sx = body_Obj.value("sx").toDouble();
+								sy = body_Obj.value("sy").toDouble();
+								ex = body_Obj.value("ex").toDouble();
+								ey = body_Obj.value("ey").toDouble();
 								rotate = body_Obj.value("ro").toDouble();
 								Vec2 spoint(sx, sy);
 								Vec2 epoint(ex, ey);
@@ -946,10 +946,10 @@ void QtEdit::Init()
 							if (per_Obj.contains("eff"))
 							{
 								QJsonObject eff_Obj = per_Obj.value("eff").toObject();
-								sx = eff_Obj.value("sx").toInt();
-								sy = eff_Obj.value("sy").toInt();
-								ex = eff_Obj.value("ex").toInt();
-								ey = eff_Obj.value("ey").toInt();
+								sx = eff_Obj.value("sx").toDouble();
+								sy = eff_Obj.value("sy").toDouble();
+								ex = eff_Obj.value("ex").toDouble();
+								ey = eff_Obj.value("ey").toDouble();
 								rotate = eff_Obj.value("ro").toDouble();
 								Vec2 spoint(sx, sy);
 								Vec2 epoint(ex, ey);

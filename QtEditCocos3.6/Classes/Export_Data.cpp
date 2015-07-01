@@ -328,12 +328,12 @@ void Export_Data::Dosave_JsonData(const char * file_name, const vector<MyVector 
 	Json::Value SItem;
 	Json::Value _data;
 	int i, j, k;
-	int attsx, attsy, attex, attey;
-	float attrotate;
-	int injsx, injsy, injex, injey;
-	float injrotate;
-	int bodsx, bodsy, bodex, bodey;
-	int effsx, effsy, effex, effey;
+	double attsx, attsy, attex, attey;
+	double attrotate;
+	double injsx, injsy, injex, injey;
+	double injrotate;
+	double bodsx, bodsy, bodex, bodey;
+	double effsx, effsy, effex, effey;
 	//QFile file(name);
 	//if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
 	//{
