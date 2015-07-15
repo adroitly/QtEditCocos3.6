@@ -111,6 +111,8 @@ protected:
 	void closeEvent(QCloseEvent *);
 	void setParent(HWND);
 	void Init();
+	void setRePosition(int a);
+	int getCurrIndex(QString &str);
 	
 private:
 	

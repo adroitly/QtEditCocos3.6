@@ -197,6 +197,7 @@ void QtEdit::BoxChangeInput(QString str)
 	Shift_is_ON = shift_temp;
 	Space_is_ON = space_temp;
 	ui.MyBox_comboBox->setCurrentText(comboxstring);
+	setRePosition(getCurrIndex(comboxstring));
 	Is_ChangeInputToBox = false;
 }
 void QtEdit::Mybox_Combox(QString str)
@@ -205,7 +206,11 @@ void QtEdit::Mybox_Combox(QString str)
 	{
 		return;
 	}
-	if (str == _Injtext)
+	if (str == _InComboxtext)
+	{
+		setMyBox(0);
+	}
+	else if (str == _Injtext)
 	{
 		//log("%s", str.toStdString().c_str());
 		setMyBox(1);
@@ -234,6 +239,8 @@ void QtEdit::wheelEvent(QWheelEvent *e)
 	//{
 	//	return;
 	//}
+	float _ScallX = ui.ScallX->text().toFloat();
+	float _ScallY = ui.ScallY->text().toFloat();
 	int num = e->delta();
 	int down_up = 1;
 	if (num < 0)//向下滚动
@@ -309,10 +316,92 @@ void QtEdit::wheelEvent(QWheelEvent *e)
 		BoxChangeInput("");
 		pu = 1;
 		pausebuttonclick();
+		QString str = ui.MyBox_comboBox->currentText();
+		int a = getCurrIndex(str);
+
+		setRePosition(a);
+	}
+}
+int QtEdit::getCurrIndex(QString &str)
+{
+	int a;
+	if (str == _InComboxtext)
+	{
+		a = 0;
+	}
+	else if (str == _Injtext)
+	{
+		a = 1;
+	}
+	else if (str == _Atttext)
+	{
+		a = 2;
+	}
+	else if (str == _Bodytext)
+	{
+		a = 3;
+	}
+	else if (str == _Effecttext)
+	{
+		a = 4;
+	}
+	return a;
+}
+void QtEdit::setRePosition(int a)
+{
+	double _PoScallX = ui.ScallX->text().toDouble();
+	double _PoScallY = ui.ScallY->text().toDouble();
+	if (a == 0)
+	{
+		ui.St_Width->setText("");
+		ui.St_Height->setText("");
+		ui.En_Width->setText("");
+		ui.En_Height->setText("");
+		ui.Rotate->setText("");
+	}
+	else if (a == 1)
+	{
+		ui.St_Width_RE->setText(QString("%1").arg((_DrawRectLayer->injuredNode->Relativevertices[0].x - ui.Width->text().toFloat()) / _PoScallX));
+		ui.St_Height_RE->setText(QString("%1").arg((_DrawRectLayer->injuredNode->Relativevertices[0].y - ui.Height->text().toFloat()) / _PoScallY));
+		ui.En_Width_RE->setText(QString("%1").arg((_DrawRectLayer->injuredNode->Relativevertices[2].x - ui.Width->text().toFloat()) / _PoScallX));
+		ui.En_Height_RE->setText(QString("%1").arg((_DrawRectLayer->injuredNode->Relativevertices[2].y - ui.Height->text().toFloat()) / _PoScallY));
+		ui.Rotate->setText(QString("%1").arg(180.0 / PI * (_DrawRectLayer->injuredNode->Rotate)));
+	}
+	else if (a == 2)
+	{
+		ui.St_Width_RE->setText(QString("%1").arg((_DrawRectLayer->attackNode->Relativevertices[0].x - ui.Width->text().toFloat()) / _PoScallX));
+		ui.St_Height_RE->setText(QString("%1").arg((_DrawRectLayer->attackNode->Relativevertices[0].y - ui.Height->text().toFloat()) / _PoScallY));
+		ui.En_Width_RE->setText(QString("%1").arg((_DrawRectLayer->attackNode->Relativevertices[2].x - ui.Width->text().toFloat()) / _PoScallX));
+		ui.En_Height_RE->setText(QString("%1").arg((_DrawRectLayer->attackNode->Relativevertices[2].y - ui.Height->text().toFloat()) / _PoScallY));
+		ui.Rotate->setText(QString("%1").arg(180.0 / PI * (_DrawRectLayer->attackNode->Rotate)));
+	}
+	else if (a == 3)
+	{
+		ui.St_Width_RE->setText(QString("%1").arg((_DrawRectLayer->bodyNode->Relativevertices[0].x - ui.Width->text().toFloat()) / _PoScallX));
+		ui.St_Height_RE->setText(QString("%1").arg((_DrawRectLayer->bodyNode->Relativevertices[0].y - ui.Height->text().toFloat()) / _PoScallY));
+		ui.En_Width_RE->setText(QString("%1").arg((_DrawRectLayer->bodyNode->Relativevertices[2].x - ui.Width->text().toFloat()) / _PoScallX));
+		ui.En_Height_RE->setText(QString("%1").arg((_DrawRectLayer->bodyNode->Relativevertices[2].y - ui.Height->text().toFloat()) / _PoScallY));
+		ui.Rotate->setText("0");
+	}
+	else if (a == 4)
+	{
+		ui.St_Width_RE->setText(QString("%1").arg((_DrawRectLayer->effefcNode->Relativevertices[0].x - ui.Width->text().toFloat()) / _PoScallX));
+		ui.St_Height_RE->setText(QString("%1").arg((_DrawRectLayer->effefcNode->Relativevertices[0].y - ui.Height->text().toFloat()) / _PoScallY));
+		ui.En_Width_RE->setText(QString("%1").arg((_DrawRectLayer->effefcNode->Relativevertices[2].x - ui.Width->text().toFloat()) / _PoScallX));
+		ui.En_Height_RE->setText(QString("%1").arg((_DrawRectLayer->effefcNode->Relativevertices[2].y - ui.Height->text().toFloat()) / _PoScallY));
+		ui.Rotate->setText("0");
 	}
 }
 void QtEdit::setMyBox(int a)
 {
+	if (a == 0)
+	{
+		ui.St_Width->setText("");
+		ui.St_Height->setText("");
+		ui.En_Width->setText("");
+		ui.En_Height->setText("");
+		ui.Rotate->setText("");
+	}
 	if (a == 1)
 	{
 		//ui.St_Width->setText(QString("%1").arg(_DrawRectLayer->OneSpritePoint->injureVertices[0].x));
@@ -369,6 +458,7 @@ void QtEdit::setMyBox(int a)
 		ui.En_Width->setText(QString("%1").arg(int(_DrawRectLayer->attackNode->Relativevertices[2].x - ui.Width->text().toFloat())));
 		ui.En_Height->setText(QString("%1").arg(int(_DrawRectLayer->attackNode->Relativevertices[2].y - ui.Height->text().toFloat())));
 		ui.Rotate->setText(QString("%1").arg(180.0 / PI * (_DrawRectLayer->attackNode->Rotate)));
+
 		
 	}
 	else if (a == 3 )
@@ -401,6 +491,7 @@ void QtEdit::setMyBox(int a)
 		ui.En_Height->setText(QString("%1").arg(int(_DrawRectLayer->effefcNode->Relativevertices[2].y - ui.Height->text().toFloat())));
 		ui.Rotate->setText(QString("%1").arg(_DrawRectLayer->effefcNode->Rotate));
 	}
+	setRePosition(a);
 }
 void QtEdit::saveAllData()
 {
@@ -2520,6 +2611,11 @@ void QtEdit::SetFraDe(MySpritePoint * _temp_sprite_point)
 	ui.En_Width->setText("");
 	ui.En_Height->setText("");
 	ui.Rotate->setText("");
+	ui.St_Width_RE->setText("");
+	ui.St_Height_RE->setText("");
+	ui.En_Width_RE->setText("");
+	ui.En_Height_RE->setText("");
+	ui.Rotate_RE->setText("");
 	//ChangeInput();
 	MySpriteChange();
 }
