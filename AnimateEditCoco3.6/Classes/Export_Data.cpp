@@ -185,7 +185,8 @@ void Export_Data::Export_ByteData(QVector<MyLineVector *> & _animateLineButton, 
 	int frame_model;
 	bool _is_frame;
 	bool _is_null;
-	float _tempScall;
+	float _tempScallX;
+	float _tempScallY;
 	int _count;
 	for (k = 0; k < _animateLineButton.size(); k ++ )
 	{
@@ -207,7 +208,8 @@ void Export_Data::Export_ByteData(QVector<MyLineVector *> & _animateLineButton, 
 			//partID (unsigned char);
 			_anima->writeUnsignedChar(_lineButton.at(i).at(0)->getLineID());
 			_count = 0;
-			_tempScall = 1;
+			_tempScallX = 1;
+			_tempScallY = 1;
 			for (j = 0; j < _lineButton.at(i).size(); j++)
 			{
 				if (_lineButton.at(i).at(j)->isFrame())
@@ -215,7 +217,8 @@ void Export_Data::Export_ByteData(QVector<MyLineVector *> & _animateLineButton, 
 					_count++;
 					if (_count == 1)
 					{
-						_tempScall = _lineButton.at(0).at(j)->_ScallX;
+						_tempScallX = _lineButton.at(0).at(j)->_ScallX;
+						_tempScallY = _lineButton.at(0).at(j)->_ScallY;
 						_drawNodeVertices = _lineButton.at(i).at(j)->_DrawNodeVertices;
 						Width = abs(_drawNodeVertices->Relativevertices[0].x - _drawNodeVertices->Relativevertices[2].x);
 						Height = abs(_drawNodeVertices->Relativevertices[0].y - _drawNodeVertices->Relativevertices[2].y);
@@ -248,8 +251,8 @@ void Export_Data::Export_ByteData(QVector<MyLineVector *> & _animateLineButton, 
 			else
 			{
 				_anima->writeUnsignedChar(1);
-				_anima->writeFloat(Width / _tempScall);
-				_anima->writeFloat(Height / _tempScall);
+				_anima->writeFloat(Width / _tempScallX);
+				_anima->writeFloat(Height / _tempScallY);
 			}
 
 			_anima->writeUnsignedShort(_count);
@@ -262,9 +265,10 @@ void Export_Data::Export_ByteData(QVector<MyLineVector *> & _animateLineButton, 
 					float time = j / oneFPX;
 					float _x = (_drawNodeVertices->Relativevertices[0].x + _drawNodeVertices->Relativevertices[2].x) / 2.0 - _temp->_Width;
 					float _y = (_drawNodeVertices->Relativevertices[0].y + _drawNodeVertices->Relativevertices[2].y) / 2.0 - _temp->_Height;
-					float _my_Scall = _lineButton.at(0).at(j)->_ScallX;
-					_x = _x / _my_Scall;
-					_y = _y / _my_Scall;
+					float _my_ScallX = _lineButton.at(0).at(j)->_ScallX;
+					float _my_ScallY = _lineButton.at(0).at(j)->_ScallY;
+					_x = _x / _my_ScallX;
+					_y = _y / _my_ScallY;
 					if (i == 0)
 					{
 						_x = _temp->_Width - _IN_Width;
@@ -272,7 +276,8 @@ void Export_Data::Export_ByteData(QVector<MyLineVector *> & _animateLineButton, 
 					}
 					else
 					{
-						_my_Scall = _my_Scall / _tempScall;
+						_my_ScallX = _my_ScallX / _tempScallX;
+						_my_ScallY = _my_ScallY / _tempScallY;
 					}
 					float rotation = _drawNodeVertices->Rotate;
 					bool is_null = _lineButton.at(i).at(j)->isNULL();
@@ -287,7 +292,8 @@ void Export_Data::Export_ByteData(QVector<MyLineVector *> & _animateLineButton, 
 					_anima->writeFloat(time);
 					_anima->writeFloat(_x);
 					_anima->writeFloat(_y);
-					_anima->writeFloat(_my_Scall);
+					_anima->writeFloat(_my_ScallX);
+					_anima->writeFloat(_my_ScallY);
 					_anima->writeFloat(rotation);
 					_anima->writeBool(is_null);
 				}
