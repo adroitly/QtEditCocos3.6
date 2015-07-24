@@ -385,7 +385,7 @@ void QtEdit::importSpine()
 		{
 			pausebuttonclick();
 		}
-
+		_allClickButton.resize(0);
 		_DrawLayer->updateMySpine(file_name.toStdString(), (fi.path() + "/" + fi.fileName().split(".").at(0) + ".json").toStdString());
 		SpiteS_Model = 2;
 		AddAnimationList(file_name);
@@ -1742,23 +1742,63 @@ void QtEdit::Init_ClickButton(int col)
 	_LinesTableWidget->setRowCount(_allClickButton.size());
 	_LinesTableWidget->setColumnCount(FPX);
 	_lineVerHeader.clear();
+	int _frame_model;
 	//_lineVerHeader << QStringLiteral("peo");
+	QVector<ClickButton *> _add_line;
 	for (i = 0; i < _allClickButton.size(); i++)
 	{
-		for (j = 0; j < _allClickButton.at(i).size(); j++)
+		_add_line.clear();
+		for (j = 0; j < FPX; j++)
 		{
-			_Temp = _allClickButton.at(i).at(j);
-			if (j == 0)
+			if (j < _allClickButton.at(i).size())
 			{
-				_lineVerHeader.push_back(getHeadName(_Temp->getFrameMode()));
+				_Temp = _allClickButton.at(i).at(j);
+				if (j == 0)
+				{
+					_lineVerHeader.push_back(getHeadName(_Temp->getFrameMode()));
+				}
+				_LinesTableWidget->setCellWidget(i, j, _Temp);
+				_LinesTableWidget->setRowHeight(i, 20);
+				_LinesTableWidget->setColumnWidth(j, 40);
+				if (_Temp->isFrame())
+				{
+					_Temp->setButtonColor();
+				}
+				_frame_model = _Temp->getFrameMode();
 			}
-			_LinesTableWidget->setCellWidget(i, j, _Temp);
-			_LinesTableWidget->setRowHeight(i, 20);
-			_LinesTableWidget->setColumnWidth(j, 40);
-			if (_Temp->isFrame())
+			else
 			{
-				_Temp->setButtonColor();
+				ClickButton *_TempClick = new ClickButton(i, j + 1, _frame_model);
+				if (j == 0)
+				{
+					_lineVerHeader.push_back(getHeadName(_TempClick->getFrameMode()));
+				}
+				_LinesTableWidget->setCellWidget(i, j, _TempClick);
+				_LinesTableWidget->setRowHeight(i, 20);
+				_LinesTableWidget->setColumnWidth(j, 40);
+				if (_TempClick->isFrame())
+				{
+					_TempClick->setButtonColor();
+				}
+				_add_line.push_back(_TempClick);
 			}
+		}
+		if (_add_line.size() > 0)
+		{
+			int _last = _allClickButton.at(i).size();
+			_allClickButton[i].resize(_allClickButton.at(i).size() + _add_line.size());
+			for (j = 0; j < _add_line.size(); j++)
+			{
+				_allClickButton[i][_last + j] = _add_line.at(j);
+			}
+		}
+		else if (FPX < _allClickButton.at(i).size())
+		{
+			for (j = FPX; j < _allClickButton.at(i).size(); j++)
+			{
+				delete _allClickButton.at(i).at(j);
+			}
+			_allClickButton[i].resize(FPX);
 		}
 	}
 	
