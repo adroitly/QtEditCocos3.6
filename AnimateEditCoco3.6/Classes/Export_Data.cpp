@@ -267,6 +267,8 @@ void Export_Data::Export_ByteData(QVector<MyLineVector *> & _animateLineButton, 
 					float _y = (_drawNodeVertices->Relativevertices[0].y + _drawNodeVertices->Relativevertices[2].y) / 2.0 - _temp->_Height;
 					float _my_ScallX = _lineButton.at(0).at(j)->_ScallX;
 					float _my_ScallY = _lineButton.at(0).at(j)->_ScallY;
+					float _posi_x = abs(_drawNodeVertices->Relativevertices[0].x - _drawNodeVertices->Relativevertices[2].x);
+					float _posi_y = abs(_drawNodeVertices->Relativevertices[0].y - _drawNodeVertices->Relativevertices[2].y);
 					_x = _x / _my_ScallX;
 					_y = _y / _my_ScallY;
 					if (i == 0)
@@ -276,8 +278,8 @@ void Export_Data::Export_ByteData(QVector<MyLineVector *> & _animateLineButton, 
 					}
 					else
 					{
-						_my_ScallX = _my_ScallX / _tempScallX;
-						_my_ScallY = _my_ScallY / _tempScallY;
+						_my_ScallX = _posi_x / Width;
+						_my_ScallY = _posi_y / Height;
 					}
 					float rotation = _drawNodeVertices->Rotate;
 					bool is_null = _lineButton.at(i).at(j)->isNULL();
@@ -289,6 +291,9 @@ void Export_Data::Export_ByteData(QVector<MyLineVector *> & _animateLineButton, 
 					{
 						is_null = false;
 					}
+					char str[200];
+					std::sprintf(str, "time=%f  _x=%f  _y=%f  SX=%f SY=%f rota=%f isVi=%s", time, _x, _y, _my_ScallX, _my_ScallY, rotation, is_null == true ? "TRUE" : "FALSE");
+					QtEdit::getInstance()->ShowMsg(str);
 					_anima->writeFloat(time);
 					_anima->writeFloat(_x);
 					_anima->writeFloat(_y);
