@@ -366,6 +366,13 @@ void QtEdit::importSpine()
 		codec->toUnicode("导入atlas文件"), openSpineFile_Path, filter);
 	if (!file_name.isNull())
 	{
+		int i = 0;
+		for (i = 0; i < _animateLineButton.size(); i++)
+		{
+			DEL_FREE_OBJ(_animateLineButton.at(i));
+		}
+		_animateLineButton.clear();
+		_allClickButton.clear();
 		//fileName是文件名
 		is_import = true;
 		MySQLite(true, file_name, "open_spine_path");
@@ -643,6 +650,13 @@ void QtEdit::import()
 	if (!file_name.isNull())
 	{
 		//fileName是文件名
+		int i = 0;
+		for (i = 0; i < _animateLineButton.size(); i ++)
+		{
+			DEL_FREE_OBJ(_animateLineButton.at(i));
+		}
+		_animateLineButton.clear();
+		_allClickButton.clear();
 		SpiteS_Model = 1;
 		MySQLite(true, file_name, "open_c3b_path");
 		//log("%d", file_name.lastIndexOf("/"));
