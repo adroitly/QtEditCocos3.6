@@ -454,8 +454,8 @@ void ClickButton::UpdateVertices()
 			_tempbtn->_ScallY = _ScallY;
 			_tempbtn->_Height = _Height;
 			_tempbtn->_Width = _Width;
-			//_tempbtn = _QtEdit->_allClickButton.at(_row).at(_col - 1);
-			//_tempbtn->_DrawNodeVertices->updateRetlativeVertices(_Width, _Height, _ScallX, _ScallY);
+			_tempbtn = _QtEdit->_allClickButton.at(_row).at(_col - 1);
+			_tempbtn->_DrawNodeVertices->updateRetlativeVertices(_Width, _Height, _ScallX, _ScallY);
 		}
 	}
 	else

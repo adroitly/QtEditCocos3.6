@@ -76,6 +76,7 @@ private slots:
 	void importSpine();
 	void exportData();
 	void openData();
+	void BoxLengthChangeInput();
 	void ChangeInput();
 	void ReChangeInput();
 	void showmessageChange();
