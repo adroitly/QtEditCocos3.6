@@ -1531,6 +1531,7 @@ void QtEdit::LineID_ChangeInput()
 	int _lineId = ui.Line_ID->text().toInt();
 	if (SeleteLineRow >= 0)
 	{
+		_QtEdit->setWindowTitle(_QtEdit->windowTitle().split("*").at(0) + "*");
 		_allClickButton.at(SeleteLineRow).at(0)->setLineID(_lineId);
 	}
 }

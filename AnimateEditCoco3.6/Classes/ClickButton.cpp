@@ -225,6 +225,7 @@ void ClickButton::DoDelFrame()
 
 void ClickButton::FreeBox()
 {
+	_QtEdit->setWindowTitle(_QtEdit->windowTitle().split("*").at(0) + "*");
 	_is_null = true;
 	_DrawNodeVertices->reset();
 	Click_ED(true);
