@@ -373,6 +373,7 @@ void QtEdit::importSpine()
 		}
 		_animateLineButton.clear();
 		_allClickButton.clear();
+		_last_animaID = -1;
 		//fileName是文件名
 		is_import = true;
 		MySQLite(true, file_name, "open_spine_path");
@@ -657,6 +658,7 @@ void QtEdit::import()
 		}
 		_animateLineButton.clear();
 		_allClickButton.clear();
+		_last_animaID = -1;
 		SpiteS_Model = 1;
 		MySQLite(true, file_name, "open_c3b_path");
 		//log("%d", file_name.lastIndexOf("/"));
@@ -691,7 +693,7 @@ void QtEdit::import()
 			//setPerWiget(FPX);
 			//从.data文件中导入数据
 			Init();
-
+			int a;
 
 		}
 		else
