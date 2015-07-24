@@ -80,6 +80,8 @@ void QtEdit::AddCao()
 
 	QObject::connect(ui.Box_Width, SIGNAL(textEdited(QString)), this, SLOT(BoxLengthChangeInput()));
 	QObject::connect(ui.Box_Height, SIGNAL(textEdited(QString)), this, SLOT(BoxLengthChangeInput()));
+	QObject::connect(ui.Box_X_Posi, SIGNAL(textEdited(QString)), this, SLOT(BoxMidPosiChangeInput()));
+	QObject::connect(ui.Box_Y_Posi, SIGNAL(textEdited(QString)), this, SLOT(BoxMidPosiChangeInput()));
 
 	QObject::connect(ui.Width, SIGNAL(textEdited(QString)), this, SLOT(ChangeInput()));
 	QObject::connect(ui.Height, SIGNAL(textEdited(QString)), this, SLOT(ChangeInput()));
@@ -242,6 +244,16 @@ void QtEdit::wheelEvent(QWheelEvent *e)
 	{
 		ui.Box_Width->setText(QString("%2").arg(ui.Box_Width->text().toDouble() + down_up));
 		BoxLengthChangeInput();
+	}
+	else if (ui.Box_X_Posi->hasFocus())
+	{
+		ui.Box_X_Posi->setText(QString("%2").arg(ui.Box_X_Posi->text().toDouble() + down_up));
+		BoxMidPosiChangeInput();
+	}
+	else if (ui.Box_Y_Posi->hasFocus())
+	{
+		ui.Box_Y_Posi->setText(QString("%2").arg(ui.Box_Y_Posi->text().toDouble() + down_up));
+		BoxMidPosiChangeInput();
 	}
 	else if (ui.ScallX->hasFocus())
 	{
@@ -926,6 +938,41 @@ void QtEdit::BoxLengthChangeInput()
 	}
 }
 
+void QtEdit::BoxMidPosiChangeInput()
+{
+	if (_allClickButton.size() > 0)
+	{
+		_tempClickButton = _allClickButton.at(selectRow).at(selectCol);
+		DrawNodeVertices * _DrawNodeVertices = _tempClickButton->_DrawNodeVertices;
+		double _x = ui.Width->text().toDouble();
+		double _y = ui.Height->text().toDouble();
+		_QtEdit->setWindowTitle(_QtEdit->windowTitle().split("*").at(0) + "*");
+		double _inputX = ui.Box_X_Posi->text().toDouble();
+		double _inputY = ui.Box_Y_Posi->text().toDouble();
+		double _posiX = _tempClickButton->_DrawNodeVertices->getRelateMidPoint().x - _x;
+		double _posiY = _tempClickButton->_DrawNodeVertices->getRelateMidPoint().y - _y;
+		double _Rotate = ui.Rotate->text().toDouble();
+		double _reposi;
+		if (_inputX != _posiX)
+		{
+			_reposi = _inputX - _posiX;
+			_DrawNodeVertices->Relativevertices[0].set(_DrawNodeVertices->Relativevertices[0].x + _reposi, _DrawNodeVertices->Relativevertices[0].y);
+			_DrawNodeVertices->Relativevertices[2].set(_DrawNodeVertices->Relativevertices[2].x + _reposi, _DrawNodeVertices->Relativevertices[2].y);
+			_DrawNodeVertices->updateRetlativeVertices();
+		}
+		else if (_inputY != _posiY)
+		{
+			_reposi = _inputY - _posiY;
+			_DrawNodeVertices->Relativevertices[0].set(_DrawNodeVertices->Relativevertices[0].x, _DrawNodeVertices->Relativevertices[0].y + _reposi);
+			_DrawNodeVertices->Relativevertices[2].set(_DrawNodeVertices->Relativevertices[2].x, _DrawNodeVertices->Relativevertices[2].y + _reposi);
+			_DrawNodeVertices->updateRetlativeVertices();
+		}
+		_tempClickButton->_DrawNodeVertices->setRotateRelativeVertices(_tempClickButton->_DrawNodeVertices->Relativevertices[0], _tempClickButton->_DrawNodeVertices->Relativevertices[2], _Rotate * (PI / 180));
+		ClickToRepaintBar();
+	}
+
+}
+
 void QtEdit::ChangeInput()
 {
 	if (_allClickButton.size() > 0 && selectCol != -1)
@@ -1590,8 +1637,8 @@ void QtEdit::ClickToRepaintBar()
 
 	ui.Re_Height->setText(QString("%2").arg(_tempClick->_Height - _IN_Height));
 	ui.Re_Width->setText(QString("%2").arg(_tempClick->_Width - _IN_Width));
-	ui.Width->setText(QString("%2").arg((int)ui.Re_Width->text().toDouble() + _IN_Width));
-	ui.Height->setText(QString("%2").arg((int)ui.Re_Height->text().toDouble() + _IN_Height));
+	ui.Width->setText(QString("%2").arg(floatToInt(ui.Re_Width->text().toDouble() + _IN_Width)));
+	ui.Height->setText(QString("%2").arg(floatToInt(ui.Re_Height->text().toDouble() + _IN_Height)));
 	ui.ScallX->setText(QString("%2").arg(_tempClick->_ScallX));
 	ui.ScallY->setText(QString("%2").arg(_tempClick->_ScallY));
 
@@ -1604,18 +1651,29 @@ void QtEdit::ClickToRepaintBar()
 	double _Height = ui.Height->text().toInt();
 	double _Width = ui.Width->text().toInt();
 
-	ui.St_Height->setText(QString("%2").arg((int)(_tempClickButton->_DrawNodeVertices->Relativevertices[0].y - _y)));
-	ui.St_Width->setText(QString("%2").arg((int)(_tempClickButton->_DrawNodeVertices->Relativevertices[0].x - _x)));
-	ui.En_Height->setText(QString("%2").arg((int)(_tempClickButton->_DrawNodeVertices->Relativevertices[2].y - _y)));
-	ui.En_Width->setText(QString("%2").arg((int)(_tempClickButton->_DrawNodeVertices->Relativevertices[2].x - _x)));
+	ui.St_Height->setText(QString("%2").arg(floatToInt(_tempClickButton->_DrawNodeVertices->Relativevertices[0].y - _y)));
+	ui.St_Width->setText(QString("%2").arg(floatToInt(_tempClickButton->_DrawNodeVertices->Relativevertices[0].x - _x)));
+	ui.En_Height->setText(QString("%2").arg(floatToInt(_tempClickButton->_DrawNodeVertices->Relativevertices[2].y - _y)));
+	ui.En_Width->setText(QString("%2").arg(floatToInt(_tempClickButton->_DrawNodeVertices->Relativevertices[2].x - _x)));
 	ui.St_Height_RE->setText(QString("%2").arg((_tempClickButton->_DrawNodeVertices->Relativevertices[0].y - _y) / _ScallY));
 	ui.St_Width_RE->setText(QString("%2").arg((_tempClickButton->_DrawNodeVertices->Relativevertices[0].x - _x) / _ScallX));
 	ui.En_Height_RE->setText(QString("%2").arg((_tempClickButton->_DrawNodeVertices->Relativevertices[2].y - _y) / _ScallY));
 	ui.En_Width_RE->setText(QString("%2").arg((_tempClickButton->_DrawNodeVertices->Relativevertices[2].x - _x) / _ScallX));
 	ui.Rotate->setText(QString("%2").arg((int)_tempClickButton->_DrawNodeVertices->Rotate));
 	ui.Rotate_RE->setText(QString("%2").arg((int)_tempClickButton->_DrawNodeVertices->Rotate));
+
+
+
 	double box_width = abs(ui.St_Width_RE->text().toDouble() - ui.En_Width_RE->text().toDouble());
 	double box_height = abs(ui.St_Height_RE->text().toDouble() - ui.En_Height_RE->text().toDouble());
+	double box_x_posi = _tempClickButton->_DrawNodeVertices->getRelateMidPoint().x;
+	double box_y_posi = _tempClickButton->_DrawNodeVertices->getRelateMidPoint().y;
+
+	ui.Box_X_Posi->setText(QString("%2").arg(box_x_posi - _Width));
+	ui.Box_Y_Posi->setText(QString("%2").arg(box_y_posi - _Height));
+	ui.Box_X_Posi_RE->setText(QString("%2").arg((box_x_posi - _Width) / _ScallX));
+	ui.Box_Y_Posi_RE->setText(QString("%2").arg((box_y_posi - _Height) / _ScallY));
+
 	ui.Box_Width->setText(QString("%2").arg(box_width * _ScallX));
 	ui.Box_Height->setText(QString("%2").arg(box_height * _ScallY));
 	ui.Box_Width_RE->setText(QString("%2").arg(box_width));
@@ -1735,6 +1793,17 @@ QString QtEdit::getHeadName(int _model)
 		str = _Effecttext;
 	}
 	return str;
+}
+int QtEdit::floatToInt(float f){
+	int num = 0;
+	if (f > 0) //正数
+		num = (f * 10 + 5) / 10;
+	else if (f < 0) //负数
+		num = (f * 10 - 5) / 10;
+	else num = 0;
+
+	return num;
+
 }
 
 void QtEdit::Update_DrawLayer()

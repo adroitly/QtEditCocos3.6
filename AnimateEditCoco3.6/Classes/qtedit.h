@@ -32,6 +32,7 @@ public:
 	void ClickToRepaintBar();
 	void ShowMessageInBar(int argc , ...);
 	void Update_DrawLayer();
+	int floatToInt(float f);
 public:
 	int SpiteS_Model = 0;
 	bool Ctrl_Is_On;
@@ -77,6 +78,7 @@ private slots:
 	void exportData();
 	void openData();
 	void BoxLengthChangeInput();
+	void BoxMidPosiChangeInput();
 	void ChangeInput();
 	void ReChangeInput();
 	void showmessageChange();

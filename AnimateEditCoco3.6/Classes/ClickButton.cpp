@@ -387,6 +387,8 @@ void ClickButton::UpdateVertices()
 		double ssssx = _tempbtn->_DrawNodeVertices->_last_ScallX;
 		double ssssy = _tempbtn->_DrawNodeVertices->_last_ScallY;
 		_tempbtn->_DrawNodeVertices->updateRetlativeVertices(_IN_Width, _IN_Height, ssssx, ssssy);
+		double _Rotate = _tempbtn->_DrawNodeVertices->Rotate;
+		_tempbtn->_DrawNodeVertices->setRotateRelativeVertices(_tempbtn->_DrawNodeVertices->Relativevertices[0], _tempbtn->_DrawNodeVertices->Relativevertices[2], _Rotate * (PI / 180));
 		//_x = _tempbtn->_Width;
 		//_y = _tempbtn->_Height;
 		//_sx = _tempbtn->_ScallX;
