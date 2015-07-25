@@ -593,6 +593,39 @@ void QtEdit::MySQLite(bool is_Update /* = false */, QString data /* = 0  */, QSt
 }
 void QtEdit::exportData()
 {
+	//ShowMsg("Export");
+	if (_allClickButton.size() <= 0)
+	{
+		//QMessageBox::StandardButton rb = QMessageBox::question(NULL, "information", codec->toUnicode("当前没有导入资源，是否先导入资源?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+		//if (rb == QMessageBox::Yes)
+		//{
+		//	import();
+		//	
+		//}
+		QMessageBox::about(this, tr("information"), codec->toUnicode("当前没有导入资源，请先导入资源"));
+	}
+	else
+	{
+		QString fileName = QFileDialog::getSaveFileName(this,
+			codec->toUnicode("导出JSON文件"),
+			export_Json_Path,
+			tr("json Files (*.json);; all files (*)"));
+
+		if (!fileName.isNull())
+		{
+			//fileName是文件名
+			//doSaveData(fileName);
+			
+			MySQLite(true, fileName, "json_path");
+			Export_Data *_Export_Data = Export_Data::getinstance();
+			_Export_Data->Data_TO_Relatite(_allClickButton,_animateLineButton);
+			_Export_Data->Export_JSONData(_animateLineButton ,fileName.toStdString());
+		}
+		else
+		{
+			//点的是取消
+		}
+	}
 	
 }
 void QtEdit::ReChangeInput()

@@ -29,7 +29,7 @@ Export_Data * Export_Data::getinstance()
 
 void Export_Data::Export_JSONData(QVector<MyLineVector *> & _animateLineButton, std::string file_name)
 {
-
+	Export_SaveData(_animateLineButton, file_name);
 }
 
 void Export_Data::Export_SaveData(QVector<MyLineVector *> & _animateLineButton, std::string file_name)
