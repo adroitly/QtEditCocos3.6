@@ -111,18 +111,18 @@ void QtEdit::AddCao()
 	QObject::connect(ui.En_Width, SIGNAL(textEdited(QString)), this, SLOT(BoxChangeInput(QString)));
 	QObject::connect(ui.En_Height, SIGNAL(textEdited(QString)), this, SLOT(BoxChangeInput(QString)));
 	QObject::connect(ui.Rotate, SIGNAL(textEdited(QString)), this, SLOT(BoxChangeInput(QString)));
-	double_rx = new QRegExp(_Input_EXP);
-	validtor = new QRegExpValidator(*double_rx);
-	ui.St_Width->setValidator(validtor);
-	ui.St_Height->setValidator(validtor);
-	ui.En_Width->setValidator(validtor);
-	ui.En_Height->setValidator(validtor);
-	ui.Rotate->setValidator(validtor);
-	ui.Width->setValidator(validtor);
-	ui.Height->setValidator(validtor);
-	ui.ScallX->setValidator(validtor);
-	ui.ScallY->setValidator(validtor);
-	QDir dir;
+	//double_rx = new QRegExp(_Input_EXP);
+	//validtor = new QRegExpValidator(*double_rx);
+	//ui.St_Width->setValidator(validtor);
+	//ui.St_Height->setValidator(validtor);
+	//ui.En_Width->setValidator(validtor);
+	//ui.En_Height->setValidator(validtor);
+	//ui.Rotate->setValidator(validtor);
+	//ui.Width->setValidator(validtor);
+	//ui.Height->setValidator(validtor);
+	//ui.ScallX->setValidator(validtor);
+	//ui.ScallY->setValidator(validtor);
+	//QDir dir;
 	ui.Width->setText(QString("%2").arg(_IN_Width));
 	ui.Width->setText(QString("%2").arg(_IN_Height));
 	//ui.Re_Width->setValidator(validtor);
@@ -155,6 +155,10 @@ void QtEdit::ShowMsg(std::string str)
 }
 void QtEdit::BoxChangeInput(QString str)
 {
+	if (_allClickButton.size() <= 0)
+	{
+		return;
+	}
 	QString title = _QtEdit->windowTitle();
 	title = title.split("*").at(0);
 	title += "*";
@@ -1004,11 +1008,16 @@ void QtEdit::BoxLengthChangeInput()
 		_QtEdit->setWindowTitle(_QtEdit->windowTitle().split("*").at(0) + "*");
 		_tempClickButton = _tempClickButton = _allClickButton.at(selectRow).at(selectCol);
 		DrawNodeVertices * _DrawNodeVertices = _tempClickButton->_DrawNodeVertices;
-		double _width = abs(_DrawNodeVertices->Relativevertices[0].x - _DrawNodeVertices->Relativevertices[2].x);
+		double _width = abs(_DrawNodeVertices->Relativevertices[0].x - _DrawNodeVertices->Relativevertices[2].x);	
 		double _height = abs(_DrawNodeVertices->Relativevertices[0].y - _DrawNodeVertices->Relativevertices[2].y);
 		double _input_width = ui.Box_Width->text().toDouble();
 		double _input_height = ui.Box_Height->text().toDouble();
 		double _reinput;
+
+		_width = doubleToDoubletwo(_width);
+		_height = doubleToDoubletwo(_height);
+		_input_width = doubleToDoubletwo(_input_width);
+		_input_height = doubleToDoubletwo(_input_height);
 		int _Rotate = ui.Rotate->text().toInt();
 		if (_width != _input_width)
 		{
@@ -1046,6 +1055,10 @@ void QtEdit::BoxMidPosiChangeInput()
 		double _posiY = _tempClickButton->_DrawNodeVertices->getRelateMidPoint().y - _y;
 		double _Rotate = ui.Rotate->text().toDouble();
 		double _reposi;
+		_inputX = doubleToDoubletwo(_inputX);
+		_inputY = doubleToDoubletwo(_inputY);
+		_posiX = doubleToDoubletwo(_posiX);
+		_posiY = doubleToDoubletwo(_posiY);
 		if (_inputX != _posiX)
 		{
 			_reposi = _inputX - _posiX;
@@ -1089,7 +1102,11 @@ void QtEdit::ChangeInput()
 		double _sx = ui.ScallX->text().toDouble();
 		double _sy = ui.ScallY->text().toDouble();
 		double _Rotate = ui.Rotate->text().toDouble();
-
+		_x = doubleToDoubletwo(_x);
+		_y = doubleToDoubletwo(_y);
+		_sx = doubleToDoubletwo(_sx);
+		_sy = doubleToDoubletwo(_sy);
+		_Rotate = doubleToDoubletwo(_Rotate);
 		
 		_tempClick = _allClickButton.at(selectRow).at(selectCol);
 		_tempClick->_DrawNodeVertices->updateRetlativeVertices(_x, _y, _sx, _sy);
@@ -1109,11 +1126,6 @@ void QtEdit::ChangeInput()
 			_tempClick->_DrawNodeVertices->setRotateRelativeVertices(_tempClick->_DrawNodeVertices->Relativevertices[0], _tempClick->_DrawNodeVertices->Relativevertices[2], _Rotate * (PI / 180));
 
 		}
-
-		//_tempClick->_DrawNodeVertices->setRotateVertices(_tempClick->_DrawNodeVertices->Vertices[0], _tempClick->_DrawNodeVertices->Vertices[2], _Rotate * (PI / 180));
-		//_tempClick->_DrawNodeVertices->setRotateFromRelativeRotate(_tempClick->_DrawNodeVertices->RotateVertices, roposi);
-		//_tempClick->_DrawNodeVertices->setRelativeRotateVertices(_tempClick->_DrawNodeVertices->RotateVertices, roposi);
-		//_tempClick->_DrawNodeVertices->setRelativeVertices(_tempClick->_DrawNodeVertices->Relativevertices, roposi);
 		ClickToRepaintBar();
 
 	}
@@ -1737,12 +1749,19 @@ void QtEdit::ClickToRepaintBar()
 
 	double _x = ui.Width->text().toDouble();
 	double _y = ui.Height->text().toDouble();
+	_x = doubleToDoubletwo(_x);
+	_y = doubleToDoubletwo(_y);
 
 	selectModel = _tempClickButton->getFrameMode();
 	double _ScallX = ui.ScallX->text().toDouble();
 	double _ScallY = ui.ScallY->text().toDouble();
 	double _Height = ui.Height->text().toInt();
 	double _Width = ui.Width->text().toInt();
+
+	_ScallX = doubleToDoubletwo(_ScallX);
+	_ScallY = doubleToDoubletwo(_ScallY);
+	_Height = doubleToDoubletwo(_Height);
+	_Width = doubleToDoubletwo(_Width);
 
 	ui.St_Height->setText(QString("%2").arg(floatToInt(_tempClickButton->_DrawNodeVertices->Relativevertices[0].y - _y)));
 	ui.St_Width->setText(QString("%2").arg(floatToInt(_tempClickButton->_DrawNodeVertices->Relativevertices[0].x - _x)));
@@ -1753,7 +1772,6 @@ void QtEdit::ClickToRepaintBar()
 	ui.En_Height_RE->setText(QString("%2").arg((_tempClickButton->_DrawNodeVertices->Relativevertices[2].y - _y) / _ScallY));
 	ui.En_Width_RE->setText(QString("%2").arg((_tempClickButton->_DrawNodeVertices->Relativevertices[2].x - _x) / _ScallX));
 	ui.Rotate->setText(QString("%2").arg((int)_tempClickButton->_DrawNodeVertices->Rotate));
-	//ui.Rotate_RE->setText(QString("%2").arg((int)_tempClickButton->_DrawNodeVertices->Rotate));
 
 
 
@@ -1761,6 +1779,12 @@ void QtEdit::ClickToRepaintBar()
 	double box_height = abs(ui.St_Height_RE->text().toDouble() - ui.En_Height_RE->text().toDouble());
 	double box_x_posi = _tempClickButton->_DrawNodeVertices->getRelateMidPoint().x;
 	double box_y_posi = _tempClickButton->_DrawNodeVertices->getRelateMidPoint().y;
+
+	box_width = doubleToDoubletwo(box_width);
+	box_height = doubleToDoubletwo(box_height);
+	box_x_posi = doubleToDoubletwo(box_x_posi);
+	box_y_posi = doubleToDoubletwo(box_y_posi);
+
 
 	ui.Box_X_Posi->setText(QString("%2").arg(box_x_posi - _Width));
 	ui.Box_Y_Posi->setText(QString("%2").arg(box_y_posi - _Height));
@@ -1942,4 +1966,11 @@ int QtEdit::floatToInt(float f){
 void QtEdit::Update_DrawLayer()
 {
 	//_DrawLayer = DrawLayer::getinstance();
+}
+
+double QtEdit::doubleToDoubletwo(double &f)
+{
+	char str[20];
+	std::sprintf(str, "%.2f", f);
+	return atof(str);
 }

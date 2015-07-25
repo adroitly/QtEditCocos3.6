@@ -7,6 +7,8 @@
 #define  _IN_Height				100.0
 #define  _IN_ScallX				1.0
 #define  _IN_ScallY				1.0
+#define  _TEN_ScallX			10.0
+#define  _TEN_ScallY			10.0
 #define  oneFPX					30.0
 #define	 PI						3.1415926535898
 #define  _Effecttext			"Eff  "

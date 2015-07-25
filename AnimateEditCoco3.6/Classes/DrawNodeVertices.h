@@ -51,5 +51,7 @@ public:
 	double _last_Height = _IN_Height;
 	double _last_ScallX = _IN_ScallX;
 	double _last_ScallY = _IN_ScallY;
+protected:
+	void doubleToDoubletwo();
 };
 

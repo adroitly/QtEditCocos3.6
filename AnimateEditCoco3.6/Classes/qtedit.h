@@ -33,6 +33,7 @@ public:
 	void ShowMessageInBar(int argc , ...);
 	void Update_DrawLayer();
 	int floatToInt(float f);
+	double doubleToDoubletwo(double &f);
 public:
 	int SpiteS_Model = 0;
 	bool Ctrl_Is_On;

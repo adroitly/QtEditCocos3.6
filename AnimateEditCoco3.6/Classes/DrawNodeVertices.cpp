@@ -61,6 +61,7 @@ void DrawNodeVertices::setRotateFromRelativeRotate(Vec2 * MyRelativeRotate, Vec2
 	RotateVertices[2].set(MyRelativeRotate[2] - _temp);
 	RotateVertices[3].set(MyRelativeRotate[3] - _temp);
 	RotateVertices[4].set(MyRelativeRotate[4] - _temp);
+	doubleToDoubletwo();
 	//RelativeRotateVertices = MyRelativeRotate;
 }
 void DrawNodeVertices::setVerticeFromRelative(Vec2 * MyRelativeVertices, Vec2 relativeposi)
@@ -76,6 +77,7 @@ void DrawNodeVertices::setVerticeFromRelative(Vec2 * MyRelativeVertices, Vec2 re
 	Vertices[3].set(MyRelativeVertices[3] - _temp);
 	Vertices[4].set(MyRelativeVertices[4] - _temp);
 	//Relativevertices = MyRelativeVertices;
+	doubleToDoubletwo();
 }
 
 void DrawNodeVertices::setRelativeRotateVertices(Vec2 *points, Vec2 relativeposi)
@@ -88,6 +90,7 @@ void DrawNodeVertices::setRelativeRotateVertices(Vec2 *points, Vec2 relativeposi
 	RelativeRotateVertices[2].set(points[2] + _temp);
 	RelativeRotateVertices[3].set(points[3] + _temp);
 	RelativeRotateVertices[4].set(points[4] + _temp);
+	doubleToDoubletwo();
 }
 void DrawNodeVertices::setRelativeVertices(Vec2 *points, Vec2 relativeposi)
 {
@@ -101,6 +104,7 @@ void DrawNodeVertices::setRelativeVertices(Vec2 *points, Vec2 relativeposi)
 	Relativevertices[3].set(points[3] + _temp);
 	Relativevertices[4].set(points[4] + _temp);
 	//Vertices = Relativevertices;
+	doubleToDoubletwo();
 }
 
 void DrawNodeVertices::setRelativeVertices(Vec2 Startpoint, Vec2 Endpoint)
@@ -110,6 +114,7 @@ void DrawNodeVertices::setRelativeVertices(Vec2 Startpoint, Vec2 Endpoint)
 	Relativevertices[2].set(Endpoint);
 	Relativevertices[3].set(Startpoint.x, Endpoint.y);
 	Relativevertices[4].set(Startpoint);
+	doubleToDoubletwo();
 }
 
 void DrawNodeVertices::setVertices(Vec2 Startpoint, Vec2 Endpoint)
@@ -120,6 +125,7 @@ void DrawNodeVertices::setVertices(Vec2 Startpoint, Vec2 Endpoint)
 	Vertices[3].set(Startpoint.x, Endpoint.y);
 	Vertices[4].set(Startpoint);
 	setRotateVertices(Startpoint, Endpoint,Rotate);
+	doubleToDoubletwo();
 
 }
 void DrawNodeVertices::setVerticesScallX(double PosiX, double InitX, double SX)
@@ -165,6 +171,7 @@ void DrawNodeVertices::setVerticesScallX(double PosiX, double InitX, double SX)
 	_allX = PosiX - RotateVertices[4].x;
 	ve.set(PosiX - (_allX * SX / InitX), RotateVertices[4].y);
 	RotateVertices[4].set(ve);
+	doubleToDoubletwo();
 }
 void DrawNodeVertices::setVerticesScallY(double PosiY, double InitY, double SY)
 {
@@ -217,6 +224,7 @@ void DrawNodeVertices::setVerticesScallY(double PosiY, double InitY, double SY)
 	_allY = PosiY - RotateVertices[4].y;
 	posi.set(RotateVertices[4].x, PosiY - (_allY * SY / InitY));
 	RotateVertices[4].set(posi);
+	doubleToDoubletwo();
 }
 void DrawNodeVertices::setRelativeScallX(double PosiX, double InitX, double SX)
 {
@@ -267,6 +275,7 @@ void DrawNodeVertices::setRelativeScallX(double PosiX, double InitX, double SX)
 	_allX = PosiX - RelativeRotateVertices[4].x;
 	posi.set(PosiX - (_allX * SX / InitX), RelativeRotateVertices[4].y);
 	RelativeRotateVertices[4].set(posi);
+	doubleToDoubletwo();
 }
 void DrawNodeVertices::setRelativeScallY(double PosiY , double InitY , double SY)
 {
@@ -320,7 +329,7 @@ void DrawNodeVertices::setRelativeScallY(double PosiY , double InitY , double SY
 	posi.set(RelativeRotateVertices[4].x, PosiY - (_allY * SY / InitY));
 	RelativeRotateVertices[4].set(posi);
 
-
+	doubleToDoubletwo();
 
 }
 void DrawNodeVertices::setRotateVertices(Vec2 startPoint, Vec2 EndPoint, double _temp)
@@ -376,7 +385,7 @@ void DrawNodeVertices::setRotateVertices(Vec2 startPoint, Vec2 EndPoint, double 
 	RotateVertices[3].set(Vec2(x, y));
 
 	RotateVertices[4].set(RotateVertices[0]);
-
+	doubleToDoubletwo();
 }
 void DrawNodeVertices::setRotateRelativeVertices(Vec2 startPoint, Vec2 EndPoint, double _temp)
 {
@@ -431,7 +440,7 @@ void DrawNodeVertices::setRotateRelativeVertices(Vec2 startPoint, Vec2 EndPoint,
 	RelativeRotateVertices[3].set(Vec2(x, y));
 
 	RelativeRotateVertices[4].set(RelativeRotateVertices[0]);
-
+	doubleToDoubletwo();
 }
 
 Vec2 DrawNodeVertices::getMidPoint()
@@ -470,6 +479,7 @@ void DrawNodeVertices::updateRetlativeVertices()
 	Relativevertices[1].set(Relativevertices[2].x, Relativevertices[0].y);
 	Relativevertices[3].set(Relativevertices[0].x, Relativevertices[2].y);
 	Relativevertices[4].set(Relativevertices[0]);
+	doubleToDoubletwo();
 }
 
 void DrawNodeVertices::updateRetlativeVertices(double _w, double _h, double _sx, double _sy)
@@ -497,6 +507,7 @@ void DrawNodeVertices::updateRetlativeVertices(double _w, double _h, double _sx,
 	_last_Width = _w;
 	_last_ScallX = _sx;
 	_last_ScallY = _sy;
+	doubleToDoubletwo();
 }
 
 void DrawNodeVertices::updateVertices()
@@ -504,6 +515,7 @@ void DrawNodeVertices::updateVertices()
 	Vertices[1].set(Vertices[2].x, Vertices[0].y);
 	Vertices[3].set(Vertices[0].x, Vertices[2].y);
 	Vertices[4].set(Vertices[0]);
+	doubleToDoubletwo();
 }
 
 DrawNodeVertices * DrawNodeVertices::copy()
@@ -539,8 +551,42 @@ void DrawNodeVertices::reset()
 	int i = 0;
 	for (i = 0; i < 5; i ++)
 	{
-		Vertices[0].setZero();
+		Vertices[i].setZero();
+		RotateVertices[i].setZero();
 		Relativevertices[i].setZero();
 		RelativeRotateVertices[i].setZero();
+	}
+}
+
+void DrawNodeVertices::doubleToDoubletwo()
+{
+	double _x , _y;
+	char str[20];
+	int i = 0;
+	for (i = 0; i < 5; i ++)
+	{
+		std::sprintf(str, "%.2f", RelativeRotateVertices[i].x);
+		_x = std::atof(str);
+		std::sprintf(str, "%.2f", RelativeRotateVertices[i].y);
+		_y = std::atof(str);
+		RelativeRotateVertices[i].set(_x, _y);
+
+		std::sprintf(str, "%.2f", Relativevertices[i].x);
+		_x = std::atof(str);
+		std::sprintf(str, "%.2f", Relativevertices[i].y);
+		_y = std::atof(str);
+		Relativevertices[i].set(_x, _y);
+
+		std::sprintf(str, "%.2f", Vertices[i].x);
+		_x = std::atof(str);
+		std::sprintf(str, "%.2f", Vertices[i].y);
+		_y = std::atof(str);
+		Vertices[i].set(_x, _y);
+
+		std::sprintf(str, "%.2f", RotateVertices[i].x);
+		_x = std::atof(str);
+		std::sprintf(str, "%.2f", RotateVertices[i].y);
+		_y = std::atof(str);
+		RotateVertices[i].set(_x, _y);
 	}
 }
