@@ -147,6 +147,7 @@ void Export_Data::Export_SaveData(QVector<MyLineVector *> & _animateLineButton, 
 
 	str = str.substr(1, _len - 1);
 	root_json[str] = _anima_json;
+	root_json["rotate3d_y"] = _QtEdit->_Rotate_3d_y;
 	str = root_json.toStyledString();
 	ofstream fout(file_name);
 	fout << str;

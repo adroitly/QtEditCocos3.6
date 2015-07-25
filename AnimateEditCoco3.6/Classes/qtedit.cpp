@@ -83,6 +83,8 @@ void QtEdit::AddCao()
 	QObject::connect(ui.Box_X_Posi, SIGNAL(textEdited(QString)), this, SLOT(BoxMidPosiChangeInput()));
 	QObject::connect(ui.Box_Y_Posi, SIGNAL(textEdited(QString)), this, SLOT(BoxMidPosiChangeInput()));
 
+	QObject::connect(ui.Rotate3D_Y, SIGNAL(textEdited(QString)), this, SLOT(Rotate3D_ChangeINput()));
+
 	QObject::connect(ui.Width, SIGNAL(textEdited(QString)), this, SLOT(ChangeInput()));
 	QObject::connect(ui.Height, SIGNAL(textEdited(QString)), this, SLOT(ChangeInput()));
 	QObject::connect(ui.ScallX, SIGNAL(textEdited(QString)), this, SLOT(ChangeInput()));
@@ -290,6 +292,11 @@ void QtEdit::wheelEvent(QWheelEvent *e)
 		//ui.ScallY->setText(QString::number(ui.ScallY->text().toDouble() + (down_up * 0.1)));
 		//ReChangeInput();
 		ChangeInput();
+	}
+	else if (ui.Rotate3D_Y->hasFocus())
+	{
+		ui.Rotate3D_Y->setText(QString("%2").arg(ui.Rotate3D_Y->text().toDouble() + down_up));
+		Rotate3D_ChangeINput();
 	}
 	else if (ui.St_Width->text() != "")
 	{
@@ -726,7 +733,8 @@ void QtEdit::import()
 			//setPerWiget(FPX);
 			//从.data文件中导入数据
 			Init();
-			int a;
+			DrawLayer::getinstance()->setSpriteRotate3D_Y(_Rotate_3d_y);
+			ui.Rotate3D_Y->setText(QString("%2").arg(_Rotate_3d_y));
 
 		}
 		else
@@ -816,6 +824,10 @@ void QtEdit::Init()
 	std::string str = _opfile.substr(_opfile.find_last_of("/"));
 	int _len = str.find_last_of(".");
 	str = str.substr(1, _len - 1);
+	if (!root_json["rotate3d_y"].isNull())
+	{
+		_Rotate_3d_y = root_json["rotate3d_y"].asDouble();
+	}
 	_anima_json = root_json[str];
 	for (k = 0; k < _anima_json.size(); k ++)
 	{
@@ -952,6 +964,20 @@ void QtEdit::showmessageChange()
 {
 	
 	mymsg = ui.showmessage->toPlainText().toStdString();
+}
+
+void QtEdit::Rotate3D_ChangeINput()
+{
+	if (SpiteS_Model == 1)
+	{
+		if (_animateLineButton.size() > 0)
+		{
+			_QtEdit->setWindowTitle(_QtEdit->windowTitle().split("*").at(0) + "*");
+			double _Ro = ui.Rotate3D_Y->text().toDouble();
+			DrawLayer::getinstance()->setSpriteRotate3D_Y(_Ro);
+			_Rotate_3d_y = _Ro;
+		}
+	}
 }
 void QtEdit::BoxLengthChangeInput()
 {

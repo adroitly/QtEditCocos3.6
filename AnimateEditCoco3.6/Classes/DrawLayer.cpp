@@ -263,6 +263,12 @@ void DrawLayer::DoDrawRectNow(DrawNode * & _DNode, Vec2 * &posi,float apath , in
 	this->addChild(_DNode);
 }
 
+void DrawLayer::setSpriteRotate3D_Y(float RO)
+{
+	Vec3 sprotate(0, RO, 0);
+	_sprite->setRotation3D(sprotate);
+}
+
 void DrawLayer::setSpritePosition(float with, float height, float sacllx, float scally)
 {
 	Vec2 posi(with, height);

@@ -69,6 +69,7 @@ public:
 	int SeleteLineRow = -1;
 	bool isClickToChange = false;
 	int selectModel = 0;
+	double _Rotate_3d_y = _IN_Rotate3D_Y;
 public slots:
 	void pausebuttonclick();
 private slots:
@@ -79,6 +80,7 @@ private slots:
 	void openData();
 	void BoxLengthChangeInput();
 	void BoxMidPosiChangeInput();
+	void Rotate3D_ChangeINput();
 	void ChangeInput();
 	void ReChangeInput();
 	void showmessageChange();

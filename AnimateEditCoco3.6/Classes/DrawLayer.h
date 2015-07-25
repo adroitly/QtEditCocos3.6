@@ -13,6 +13,7 @@ public:
 
 	void setSpritePosition(float with, float height, float sacllx, float scally);
 
+	void setSpriteRotate3D_Y(float _RO);
 	void updateMySprite3D(std::string filename, std::string texture, std::string file_animation);
 	void updateMySpine(std::string filename, std::string json_name);
 

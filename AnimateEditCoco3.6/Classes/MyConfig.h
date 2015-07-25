@@ -1,6 +1,8 @@
 #ifndef  _MYCONFIG_H_
 #define  _MYCONFIG_H_
 
+
+#define  _IN_Rotate3D_Y			90.0f
 #define  _IN_Width				500.0
 #define  _IN_Height				100.0
 #define  _IN_ScallX				1.0
