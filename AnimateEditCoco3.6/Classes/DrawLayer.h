@@ -13,7 +13,7 @@ public:
 
 	void setSpritePosition(float with, float height, float sacllx, float scally);
 
-	void setSpriteRotate3D_Y(float _RO);
+	void setSpriteRotate3D(float _x , float _y , float _z);
 	void updateMySprite3D(std::string filename, std::string texture, std::string file_animation);
 	void updateMySpine(std::string filename, std::string json_name);
 
@@ -66,6 +66,7 @@ private:
 	DrawNode * TempNode = NULL;
 	Vec2			Startpoint;
 	Vec2			Endpoint;
+	Node			*VisiNode;
 	Vec2 _tempPoints[5];
 	float mydt = 0.0;
 };

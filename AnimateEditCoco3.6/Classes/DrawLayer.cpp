@@ -263,9 +263,9 @@ void DrawLayer::DoDrawRectNow(DrawNode * & _DNode, Vec2 * &posi,float apath , in
 	this->addChild(_DNode);
 }
 
-void DrawLayer::setSpriteRotate3D_Y(float RO)
+void DrawLayer::setSpriteRotate3D(float _x , float _y , float _z)
 {
-	Vec3 sprotate(0, RO, 0);
+	Vec3 sprotate(_x, _y, _z);
 	_sprite->setRotation3D(sprotate);
 }
 
@@ -274,9 +274,9 @@ void DrawLayer::setSpritePosition(float with, float height, float sacllx, float 
 	Vec2 posi(with, height);
 	if (1 == _QtEdit->SpiteS_Model)
 	{
-		_sprite->setPosition(posi);
-		_sprite->setScaleZ(sacllx);
-		_sprite->setScaleY(scally);
+		VisiNode->setPosition(posi);
+		VisiNode->setScaleX(sacllx);
+		VisiNode->setScaleY(scally);
 	}
 	else if (2 == _QtEdit->SpiteS_Model)
 	{
@@ -289,6 +289,7 @@ void DrawLayer::setSpritePosition(float with, float height, float sacllx, float 
 
 void DrawLayer::updateMySprite3D(std::string filename, std::string texture, std::string file_animation)
 {
+	VisiNode = Node::create();
 	mydt = 0.0;
 	_sprite = Sprite3D::create(filename, texture);
 	Vec3 sprotate(0, 90, 0);
@@ -303,7 +304,9 @@ void DrawLayer::updateMySprite3D(std::string filename, std::string texture, std:
 		_RepeatForever = RepeatForever::create(animate);
 		_sprite->runAction(_RepeatForever);
 	}
-	this->addChild(_sprite);
+	VisiNode->addChild(_sprite);
+	this->addChild(VisiNode);
+	//this->addChild(_sprite);
 }
 
 void DrawLayer::updateMySpine(std::string filename, std::string json_name)

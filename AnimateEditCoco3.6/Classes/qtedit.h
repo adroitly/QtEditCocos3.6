@@ -69,7 +69,9 @@ public:
 	int SeleteLineRow = -1;
 	bool isClickToChange = false;
 	int selectModel = 0;
+	double _Rotate_3d_x = 0;
 	double _Rotate_3d_y = _IN_Rotate3D_Y;
+	double _Rotate_3d_z = 0;
 public slots:
 	void pausebuttonclick();
 private slots:

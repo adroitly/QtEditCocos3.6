@@ -83,7 +83,9 @@ void QtEdit::AddCao()
 	QObject::connect(ui.Box_X_Posi, SIGNAL(textEdited(QString)), this, SLOT(BoxMidPosiChangeInput()));
 	QObject::connect(ui.Box_Y_Posi, SIGNAL(textEdited(QString)), this, SLOT(BoxMidPosiChangeInput()));
 
+	QObject::connect(ui.Rotate3D_X, SIGNAL(textEdited(QString)), this, SLOT(Rotate3D_ChangeINput()));
 	QObject::connect(ui.Rotate3D_Y, SIGNAL(textEdited(QString)), this, SLOT(Rotate3D_ChangeINput()));
+	QObject::connect(ui.Rotate3D_Z, SIGNAL(textEdited(QString)), this, SLOT(Rotate3D_ChangeINput()));
 
 	QObject::connect(ui.Width, SIGNAL(textEdited(QString)), this, SLOT(ChangeInput()));
 	QObject::connect(ui.Height, SIGNAL(textEdited(QString)), this, SLOT(ChangeInput()));
@@ -293,9 +295,19 @@ void QtEdit::wheelEvent(QWheelEvent *e)
 		//ReChangeInput();
 		ChangeInput();
 	}
+	else if (ui.Rotate3D_X->hasFocus())
+	{
+		ui.Rotate3D_X->setText(QString("%2").arg(ui.Rotate3D_X->text().toDouble() + down_up));
+		Rotate3D_ChangeINput();
+	}
 	else if (ui.Rotate3D_Y->hasFocus())
 	{
 		ui.Rotate3D_Y->setText(QString("%2").arg(ui.Rotate3D_Y->text().toDouble() + down_up));
+		Rotate3D_ChangeINput();
+	}
+	else if (ui.Rotate3D_Z->hasFocus())
+	{
+		ui.Rotate3D_Z->setText(QString("%2").arg(ui.Rotate3D_Z->text().toDouble() + down_up));
 		Rotate3D_ChangeINput();
 	}
 	else if (ui.St_Width->text() != "")
@@ -733,8 +745,10 @@ void QtEdit::import()
 			//setPerWiget(FPX);
 			//从.data文件中导入数据
 			Init();
-			DrawLayer::getinstance()->setSpriteRotate3D_Y(_Rotate_3d_y);
+			DrawLayer::getinstance()->setSpriteRotate3D(_Rotate_3d_x , _Rotate_3d_y , _Rotate_3d_z);
+			ui.Rotate3D_X->setText(QString("%2").arg(_Rotate_3d_x));
 			ui.Rotate3D_Y->setText(QString("%2").arg(_Rotate_3d_y));
+			ui.Rotate3D_Z->setText(QString("%2").arg(_Rotate_3d_z));
 
 		}
 		else
@@ -824,10 +838,12 @@ void QtEdit::Init()
 	std::string str = _opfile.substr(_opfile.find_last_of("/"));
 	int _len = str.find_last_of(".");
 	str = str.substr(1, _len - 1);
+	_Rotate_3d_x = root_json["rotate3d_x"].asDouble();
 	if (!root_json["rotate3d_y"].isNull())
 	{
 		_Rotate_3d_y = root_json["rotate3d_y"].asDouble();
 	}
+	_Rotate_3d_z = root_json["rotate3d_z"].asDouble();
 	_anima_json = root_json[str];
 	for (k = 0; k < _anima_json.size(); k ++)
 	{
@@ -973,9 +989,11 @@ void QtEdit::Rotate3D_ChangeINput()
 		if (_animateLineButton.size() > 0)
 		{
 			_QtEdit->setWindowTitle(_QtEdit->windowTitle().split("*").at(0) + "*");
-			double _Ro = ui.Rotate3D_Y->text().toDouble();
-			DrawLayer::getinstance()->setSpriteRotate3D_Y(_Ro);
-			_Rotate_3d_y = _Ro;
+			_Rotate_3d_x = ui.Rotate3D_X->text().toDouble();
+			_Rotate_3d_y = ui.Rotate3D_Y->text().toDouble();
+			_Rotate_3d_z = ui.Rotate3D_Z->text().toDouble();
+			DrawLayer::getinstance()->setSpriteRotate3D(_Rotate_3d_x, _Rotate_3d_y, _Rotate_3d_z);
+			
 		}
 	}
 }
@@ -1735,7 +1753,7 @@ void QtEdit::ClickToRepaintBar()
 	ui.En_Height_RE->setText(QString("%2").arg((_tempClickButton->_DrawNodeVertices->Relativevertices[2].y - _y) / _ScallY));
 	ui.En_Width_RE->setText(QString("%2").arg((_tempClickButton->_DrawNodeVertices->Relativevertices[2].x - _x) / _ScallX));
 	ui.Rotate->setText(QString("%2").arg((int)_tempClickButton->_DrawNodeVertices->Rotate));
-	ui.Rotate_RE->setText(QString("%2").arg((int)_tempClickButton->_DrawNodeVertices->Rotate));
+	//ui.Rotate_RE->setText(QString("%2").arg((int)_tempClickButton->_DrawNodeVertices->Rotate));
 
 
 
