@@ -74,9 +74,9 @@ void Export_Data::Export_SaveData(QVector<MyLineVector *> & _animateLineButton, 
 		_saItem.clear();
 		_lineButton = _animateLineButton.at(k)->_lineButton;
 		_ani_name = _animateLineButton.at(k)->_anima_Name;
-		_anima_ID = _animateLineButton.at(k)->_anima_ID;
+		//_anima_ID = _animateLineButton.at(k)->_anima_ID;
 		_saItem["name"] = _ani_name;
-		_saItem["ID"] = _anima_ID;
+		//_saItem["ID"] = _anima_ID;
 		_line_anima.clear();
 		for (i = 0; i < _lineButton.size(); i ++)
 		{
@@ -196,7 +196,7 @@ void Export_Data::Export_ByteData(QVector<MyLineVector *> & _animateLineButton, 
 		_MyLineVector = _animateLineButton.at(k);
 		_lineButton = _MyLineVector->_lineButton;
 		_ani_name = _MyLineVector->_anima_Name;
-		_anima_ID = _MyLineVector->_anima_ID;
+		//_anima_ID = _MyLineVector->_anima_ID;
 		_anima = new ByteArray(false);
 		//name (string)
 		_anima->writeString(_ani_name);
@@ -336,6 +336,9 @@ void Export_Data::Data_TO_Relatite(QVector<QVector<ClickButton *>> & _allButton,
 			break;
 		}
 	}
+	std::string str = _QtEdit->ui.dockWidget->windowTitle().split(".").at(0).toStdString();
+	int _len = str.find_last_of("/");
+	str = str.substr(_len + 1);
 	QVector<QVector<ClickButton *>> _retaliteAllClickButton;
 	QVector<ClickButton*>_templine;
 	ClickButton *_temp;
@@ -352,7 +355,8 @@ void Export_Data::Data_TO_Relatite(QVector<QVector<ClickButton *>> & _allButton,
 	}
 	for (i = 0; i < _animateLineButton.size(); i ++)
 	{
-		if (_ani_ID == _animateLineButton.at(i)->_anima_ID)
+		//if (_ani_ID == _animateLineButton.at(i)->_anima_ID)
+		if (str == _animateLineButton.at(i)->_anima_Name)
 		{
 			_animateLineButton.at(i)->_lineButton = _retaliteAllClickButton;
 			break;

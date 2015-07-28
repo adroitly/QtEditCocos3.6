@@ -10,7 +10,7 @@ public:
 	MyLineVector();
 	~MyLineVector();
 	QVector<QVector<ClickButton *>> _lineButton;
-	int _anima_ID;
+	//int _anima_ID;
 	std::string _anima_Name;
 };
 

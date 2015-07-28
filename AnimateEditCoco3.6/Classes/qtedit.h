@@ -143,7 +143,8 @@ private:
 	QStringList _lineVerHeader;
 
 	ClickButton * _tempClickButton;
-	int _last_animaID = -1;
+	//int _last_animaID = -1;
+	std::string _last_animaname = "";
 public:
 	HWND m_Parent;
 };

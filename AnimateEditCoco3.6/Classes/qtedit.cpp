@@ -396,7 +396,8 @@ void QtEdit::importSpine()
 		}
 		_animateLineButton.clear();
 		_allClickButton.clear();
-		_last_animaID = -1;
+		//_last_animaID = -1;
+		_last_animaname = "";
 		//fileName是文件名
 		is_import = true;
 		MySQLite(true, file_name, "open_spine_path");
@@ -429,6 +430,60 @@ void QtEdit::importSpine()
 			//setPerWiget(_DrawLayer->getMySpineDuration() * oneFPX);
 			//从.data文件中导入数据
 			Init();
+			std::string str;
+			std::string _ani_name;
+			int _len;
+			int j;
+			bool Is_has;
+			if (animation_list.size() != _animateLineButton.size())
+			{
+				for (i = 0; i < animation_list.size(); i++)
+				{
+					Is_has = false;
+					str = animation_list.at(i).split(".").at(0).toStdString();
+					_len = str.find_last_of("/");
+					str = str.substr(_len + 1);
+					for (j = 0; j < _animateLineButton.size(); j++)
+					{
+						if (str == _animateLineButton.at(j)->_anima_Name)
+						{
+							Is_has = true;
+							break;
+						}
+					}
+					if (!Is_has)
+					{
+						MyLineVector * _MyLineVector = new MyLineVector();
+						_MyLineVector->_anima_Name = str;
+						_animateLineButton.push_back(_MyLineVector);
+					}
+				}
+			}
+
+			if (animation_list.size() != _animateLineButton.size())
+			{
+				for (i = 0; i < _animateLineButton.size(); i++)
+				{
+					Is_has = false;
+					for (j = 0; j < animation_list.size(); j++)
+					{
+						str = animation_list.at(j).split(".").at(0).toStdString();
+						_len = str.find_last_of("/");
+						str = str.substr(_len + 1);
+						if (str == _animateLineButton.at(i)->_anima_Name)
+						{
+							Is_has = true;
+							break;
+						}
+					}
+					if (!Is_has)
+					{
+						//DEL_FREE_OBJ(_animateLineButton.at(i));
+						_animateLineButton.removeAt(i);
+					}
+				}
+			}
+
 		}
 		else
 		{
@@ -714,7 +769,8 @@ void QtEdit::import()
 		}
 		_animateLineButton.clear();
 		_allClickButton.clear();
-		_last_animaID = -1;
+		//_last_animaID = -1;
+		_last_animaname = "";
 		SpiteS_Model = 1;
 		MySQLite(true, file_name, "open_c3b_path");
 		//log("%d", file_name.lastIndexOf("/"));
@@ -748,7 +804,59 @@ void QtEdit::import()
 			FPX = _DrawLayer->animate->getDuration() * oneFPX;
 			//setPerWiget(FPX);
 			//从.data文件中导入数据
+			int i, j;
+			bool Is_has = false;
 			Init();
+			std::string str;
+			std::string _ani_name;
+			int _len;
+			if (animation_list.size() != _animateLineButton.size())
+			{
+				for (i = 0; i < animation_list.size(); i++)
+				{
+					Is_has = false;
+					str = animation_list.at(i).split(".").at(0).toStdString();
+					_len = str.find_last_of("/");
+					str = str.substr(_len + 1);
+					for (j = 0; j < _animateLineButton.size(); j++)
+					{
+						if (str == _animateLineButton.at(j)->_anima_Name)
+						{
+							Is_has = true;
+							break;
+						}
+					}
+					if (!Is_has)
+					{
+						MyLineVector * _MyLineVector = new MyLineVector();
+						_MyLineVector->_anima_Name = str;
+						_animateLineButton.push_back(_MyLineVector);
+					}
+				}
+			}
+			if (animation_list.size() != _animateLineButton.size())
+			{
+				for (i = 0; i < _animateLineButton.size(); i++)
+				{
+					Is_has = false;
+					for (j = 0; j < animation_list.size(); j ++)
+					{
+						str = animation_list.at(j).split(".").at(0).toStdString();
+						_len = str.find_last_of("/");
+						str = str.substr(_len + 1);
+						if (str == _animateLineButton.at(i)->_anima_Name)
+						{
+							Is_has = true;
+							break;
+						}
+					}
+					if (!Is_has)
+					{
+						//DEL_FREE_OBJ(_animateLineButton.at(i));
+						_animateLineButton.removeAt(i);
+					}
+				}
+			}
 			DrawLayer::getinstance()->setSpriteRotate3D(_Rotate_3d_x , _Rotate_3d_y , _Rotate_3d_z);
 			ui.Rotate3D_X->setText(QString("%2").arg(_Rotate_3d_x));
 			ui.Rotate3D_Y->setText(QString("%2").arg(_Rotate_3d_y));
@@ -853,10 +961,10 @@ void QtEdit::Init()
 	{
 		_saItem = _anima_json[k];
 		_ani_name = _saItem["name"].asCString();
-		_anima_ID = _saItem["ID"].asDouble();
+		//_anima_ID = _saItem["ID"].asDouble();
 		_line_anima = _saItem["_data"];
 		_lineVector = new MyLineVector();
-		_lineVector->_anima_ID = _anima_ID;
+		//_lineVector->_anima_ID = _anima_ID;
 		_lineVector->_anima_Name = _ani_name;
 		_allClickButton.clear();
 		for (i = 0; i < _line_anima.size(); i ++)
@@ -1404,7 +1512,8 @@ void QtEdit::AnimationTreeWidgetClick(QTreeWidgetItem * item, int column)
 	}
 	for (i = 0; i < _animateLineButton.size(); i ++)
 	{
-		if (_animateLineButton.at(i)->_anima_ID == _last_animaID)
+		//if (_animateLineButton.at(i)->_anima_ID == _last_animaID)
+		if ( _animateLineButton.at(i)->_anima_Name == _last_animaname)
 		{
 			_animateLineButton.at(i)->_lineButton = _retaliteAllClickButton;
 			break;
@@ -1415,7 +1524,7 @@ void QtEdit::AnimationTreeWidgetClick(QTreeWidgetItem * item, int column)
 		for (i = 0; i < animation_list.size(); i ++)
 		{
 			_MyLineVector = new MyLineVector();
-			_MyLineVector->_anima_ID = i;
+			//_MyLineVector->_anima_ID = i;
 			std::string str = animation_list[i].toStdString();
 			int  _leng;
 			if (str.find_last_of("/") == -1)
@@ -1437,7 +1546,11 @@ void QtEdit::AnimationTreeWidgetClick(QTreeWidgetItem * item, int column)
 			_animateLineButton.push_back(_MyLineVector);
 		}
 	}
-	_last_animaID = _animateLineButton.at(col)->_anima_ID;
+	//_last_animaID = _animateLineButton.at(col)->_anima_ID;
+	//_last_animaname = _animateLineButton.at(col)->_anima_Name;
+	_last_animaname = animation_list.at(col).split(".").at(0).toStdString();
+	int _len = _last_animaname.find_last_of("/");
+	_last_animaname = _last_animaname.substr(_len + 1);
 	bool Is_Has = false;
 	//log("%d", column);
 	std::sprintf(s, "%s %d", "CL_", col);
@@ -1838,8 +1951,21 @@ void QtEdit::SpriteChange()
 
 void QtEdit::Init_ClickButton(int col)
 {
-	_allClickButton = _animateLineButton.at(col)->_lineButton;
-	int i = 0;
+	int _len, i;
+	std::string str;
+	str = animation_list.at(col).split(".").at(0).toStdString();
+	_len = str.find_last_of("/");
+	str = str.substr(_len + 1);
+	_allClickButton.clear();
+	for (i = 0; i < _animateLineButton.size(); i++)
+	{
+		if (str == _animateLineButton.at(i)->_anima_Name)
+		{
+			_allClickButton = _animateLineButton.at(i)->_lineButton;
+			break;
+		}
+	}
+	//_allClickButton = _animateLineButton.at(col)->_lineButton;
 	int j = 0;
 	ClickButton * _Temp;
 	if (_allClickButton.size() == 0)
