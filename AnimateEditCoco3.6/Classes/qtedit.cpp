@@ -1586,7 +1586,16 @@ void QtEdit::AnimationTreeWidgetClick(QTreeWidgetItem * item, int column)
 	}
 	selectRow = 0;
 	selectCol = 1;
-	_QtEdit->_allClickButton.at(selectRow).at(selectCol - 1)->Click_ED(true);
+	if (_QtEdit->_allClickButton.at(0).size() > 0)
+	{
+		_QtEdit->_allClickButton.at(selectRow).at(selectCol - 1)->Click_ED(true);
+	}
+	else
+	{
+		selectRow = -1;
+		selectCol = 0;
+		QMessageBox::warning(this, codec->toUnicode("警告"), codec->toUnicode("当前帧数为0"));
+	}
 	//_QtEdit->_allClickButton.at(selectRow).at(0)->Click_ED(true);
 	SpriteChange();
 	//ui.PencentageSlider->setValue(1);
