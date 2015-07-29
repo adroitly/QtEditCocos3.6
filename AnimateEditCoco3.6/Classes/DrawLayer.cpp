@@ -44,16 +44,15 @@ bool DrawLayer::onTouchBegan(Touch *touch, Event *unused_event)
 	_select_row = _QtEdit->selectRow;
 	Point touchpoint = touch->getLocation();
 	Startpoint = Vec2((int)touchpoint.x, (int)touchpoint.y);
-	if (_QtEdit)
-	{
-		_QtEdit->ui.PauseButton->setText("Start");
-		_QtEdit->pu = -1;
-	}
 	return true;
 }
 
 void DrawLayer::onTouchMoved(Touch* touch, Event *event)
 {
+	if (_QtEdit->ui.PauseButton->text().toStdString() == _Pausetext)
+	{
+		_QtEdit->pausebuttonclick();
+	}
 	Point touchpoint = touch->getLocation();
 	Endpoint = Vec2((int)touchpoint.x, (int)touchpoint.y);
 	if (std::abs(Endpoint.x - Startpoint.x) >= 15 || std::abs(Endpoint.y - Startpoint.y) >= 15)

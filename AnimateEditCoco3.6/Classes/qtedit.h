@@ -48,7 +48,7 @@ public:
 	int FPX = 30;
 	bool is_import;
 	Ui::QtEditClass ui;
-	int pu = -1;
+	int pu = 1;
 
 	int _now_linesize;
 	QTextCodec *codec;

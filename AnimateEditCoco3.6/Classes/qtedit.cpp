@@ -389,6 +389,10 @@ void QtEdit::importSpine()
 		codec->toUnicode("导入atlas文件"), openSpineFile_Path, filter);
 	if (!file_name.isNull())
 	{
+		if (ui.PauseButton->text().toStdString() == _Pausetext)
+		{
+			pausebuttonclick();
+		}
 		int i = 0;
 		for (i = 0; i < _animateLineButton.size(); i++)
 		{
@@ -413,10 +417,6 @@ void QtEdit::importSpine()
 		animation_list.clear();
 		_DrawLayer->removeAllChildrenWithCleanup(true);
 		_DrawLayer->DrawInitPosi();
-		if (ui.PauseButton->text().toStdString() == _Pausetext)
-		{
-			pausebuttonclick();
-		}
 		_allClickButton.resize(0);
 		_DrawLayer->updateMySpine(file_name.toStdString(), (fi.path() + "/" + fi.fileName().split(".").at(0) + ".json").toStdString());
 		SpiteS_Model = 2;
@@ -761,6 +761,10 @@ void QtEdit::import()
 		codec->toUnicode("导入文件"), openC3bFile_Path, filter);
 	if (!file_name.isNull())
 	{
+		if (ui.PauseButton->text().toStdString() == _Pausetext)
+		{
+			pausebuttonclick();
+		}
 		//fileName是文件名
 		int i = 0;
 		for (i = 0; i < _animateLineButton.size(); i ++)
@@ -790,10 +794,6 @@ void QtEdit::import()
 		animation_list.clear();
 		_DrawLayer->removeAllChildrenWithCleanup(true);
 		_DrawLayer->DrawInitPosi();
-		if (ui.PauseButton->text().toStdString() == _Pausetext)
-		{
-			pausebuttonclick();
-		}
 
 		AddAnimationList(file_name);
 
