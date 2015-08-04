@@ -144,7 +144,14 @@ void ClickButton::mousePressEvent(QMouseEvent *e)
 			one_BoxAction->setText(QStringLiteral("删除当前盒子"));
 			QObject::connect(one_BoxAction, SIGNAL(triggered()), this, SLOT(DelAction()));
 			free_BoxAction = new QAction(this);
-			free_BoxAction->setText(QStringLiteral("清空当前盒子"));
+			if (!_is_null)
+			{
+				free_BoxAction->setText(QStringLiteral("隐藏当前盒子"));
+			}
+			else
+			{
+				free_BoxAction->setText(QStringLiteral("显示当前盒子"));
+			}
 			QObject::connect(free_BoxAction, SIGNAL(triggered()), this, SLOT(FreeBox()));
 			popMenu->addAction(free_BoxAction);
 			popMenu->addSeparator();
@@ -282,7 +289,7 @@ void ClickButton::pasteAction()
 	_is_null = _VerticesCopy->is_null();
 	_is_Frame = true;
 	setButtonColor();
-	Click_ED(true); 
+	Click_ED(true);
 }
 //void ClickButton::focusInEvent(QFocusEvent *e)
 //{
@@ -312,8 +319,15 @@ void ClickButton::DoDelFrame()
 void ClickButton::FreeBox()
 {
 	_QtEdit->setWindowTitle(_QtEdit->windowTitle().split("*").at(0) + "*");
-	_is_null = true;
-	_DrawNodeVertices->reset();
+	if (_is_null)
+	{
+		_is_null = false;
+	}
+	else
+	{
+		_is_null = true;
+	}
+	//_DrawNodeVertices->reset();
 	Click_ED(true);
 }
 

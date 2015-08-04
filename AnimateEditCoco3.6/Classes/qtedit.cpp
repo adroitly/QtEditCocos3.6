@@ -809,7 +809,7 @@ void QtEdit::import()
 			//从.data文件中导入数据
 			int i, j;
 			bool Is_has = false;
-			QMessageBox message(QMessageBox::NoIcon, codec->toUnicode("导入数据中，请耐心等待片刻"), "");
+			QMessageBox message(QMessageBox::Warning, codec->toUnicode("导入数据中，请耐心等待片刻"), "");
 			message.show();
 			Init();
 			message.clickedButton();

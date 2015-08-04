@@ -157,19 +157,60 @@ void DrawLayer::DoDrawRectInit()
 		{
 			if (_clbtn->_DrawNodeVertices->Rotate != 0.0)
 			{
-				DoDrawRectNow(_temp, _clbtn->_DrawNodeVertices->RelativeRotateVertices, 1, _clbtn->getFrameMode());
+				if (_clbtn->isNULL())
+				{
+					Vec2 * ve = new Vec2[5];
+					DoDrawRectNow(_temp, ve, 0.5, _clbtn->getFrameMode());
+					FREE_DEL_VEC(ve);
+				}
+				else
+				{
+					DoDrawRectNow(_temp, _clbtn->_DrawNodeVertices->RelativeRotateVertices, 1, _clbtn->getFrameMode());
+				}
 			}
 			else
-				DoDrawRectNow(_temp, _clbtn->_DrawNodeVertices->Relativevertices, 1, _clbtn->getFrameMode());
+			{
+				if (_clbtn->isNULL())
+				{
+					Vec2 * ve = new Vec2[5];
+					DoDrawRectNow(_temp, ve, 0.5, _clbtn->getFrameMode());
+					FREE_DEL_VEC(ve);
+				}
+				else
+				{
+					DoDrawRectNow(_temp, _clbtn->_DrawNodeVertices->Relativevertices, 1, _clbtn->getFrameMode());
+				}
+			}
+				
 		}
 		else
 		{
 			if (_clbtn->_DrawNodeVertices->Rotate != 0.0)
 			{
-				DoDrawRectNow(_temp, _clbtn->_DrawNodeVertices->RelativeRotateVertices, 0.5, _clbtn->getFrameMode());
+				if (_clbtn->isNULL())
+				{
+					Vec2 * ve = new Vec2[5];
+					DoDrawRectNow(_temp, ve, 0.5, _clbtn->getFrameMode());
+					FREE_DEL_VEC(ve);
+				}
+				else
+				{
+					DoDrawRectNow(_temp, _clbtn->_DrawNodeVertices->RelativeRotateVertices, 0.5, _clbtn->getFrameMode());
+				}
 			}
 			else
-				DoDrawRectNow(_temp, _clbtn->_DrawNodeVertices->Relativevertices, 0.5, _clbtn->getFrameMode());
+			{
+				if (_clbtn->isNULL())
+				{
+					Vec2 * ve = new Vec2[5];
+					DoDrawRectNow(_temp, ve, 0.5, _clbtn->getFrameMode());
+					FREE_DEL_VEC(ve);
+				}
+				else
+				{
+					DoDrawRectNow(_temp, _clbtn->_DrawNodeVertices->Relativevertices, 0.5, _clbtn->getFrameMode());
+				}
+			}
 		}
 		
 	}
