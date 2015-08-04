@@ -282,7 +282,7 @@ void ClickButton::pasteAction()
 	_is_null = _VerticesCopy->is_null();
 	_is_Frame = true;
 	setButtonColor();
-	Click_ED(true);
+	Click_ED(true); 
 }
 //void ClickButton::focusInEvent(QFocusEvent *e)
 //{
