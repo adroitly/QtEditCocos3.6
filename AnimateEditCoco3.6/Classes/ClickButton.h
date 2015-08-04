@@ -45,8 +45,8 @@ public:
 protected:
 	void UpdateVertices();
 private slots:
-	//void keyPressEvent(QKeyEvent *e);
-	//void keyReleaseEvent(QKeyEvent *e);
+	void keyPressEvent(QKeyEvent *e);
+	void keyReleaseEvent(QKeyEvent *e);
 	void mousePressEvent(QMouseEvent *e);
 	void DelAction();
 	void DddAction();
@@ -55,7 +55,7 @@ private slots:
 	//void focusInEvent(QFocusEvent *);
 	//void focusOutEvent(QFocusEvent *);
 	void copyAction();
-	void pauseAction();
+	void pasteAction();
 	void FreeBox();
 private:
 	int _row;
@@ -72,6 +72,9 @@ private:
 	QWidget * _parent;
 	int _line_ID;
 	bool _is_null = false;
+	bool KeyCtrl_Is_ON = false;
+	bool KeyC_Is_ON = false;
+	bool KeyV_Is_ON = false;
 public:
 	DrawNodeVertices * _DrawNodeVertices = NULL;
 	double _ScallX = _IN_ScallX;

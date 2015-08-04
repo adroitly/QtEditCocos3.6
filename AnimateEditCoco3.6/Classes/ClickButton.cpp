@@ -46,15 +46,53 @@ void ClickButton::setButtonColor()
 	_is_Frame = true;
 }
 
-//void ClickButton::keyPressEvent(QKeyEvent *e)
-//{
-//
-//}
-//
-//void ClickButton::keyReleaseEvent(QKeyEvent *e)
-//{
-//
-//}
+void ClickButton::keyPressEvent(QKeyEvent *e)
+{
+	if (e->key() == Qt::Key_Control)
+	{
+		KeyCtrl_Is_ON = true;
+		QtEdit::getInstance()->Ctrl_Is_On = true;
+	}
+	if (e->key() == Qt::Key_C)
+	{
+		KeyC_Is_ON = true;
+	}
+	if (e->key() == Qt::Key_V)
+	{
+		KeyV_Is_ON = true;
+	}
+	if (KeyC_Is_ON == true && KeyCtrl_Is_ON == true && KeyV_Is_ON == false)
+	{
+		if (_is_Frame)
+		{
+			copyAction();
+		}
+	}
+	if (KeyV_Is_ON == true && KeyCtrl_Is_ON == true && KeyC_Is_ON == false)
+	{
+		if (VerticesCopy::getinstance()->is_has_copy())
+		{
+			pasteAction();
+		}
+	}
+}
+
+void ClickButton::keyReleaseEvent(QKeyEvent *e)
+{
+	if (e->key() == Qt::Key_Control)
+	{
+		KeyCtrl_Is_ON = false;
+		QtEdit::getInstance()->Ctrl_Is_On = false;
+	}
+	if (e->key() == Qt::Key_C)
+	{
+		KeyC_Is_ON = false;
+	}
+	if (e->key() == Qt::Key_V)
+	{
+		KeyV_Is_ON = false;
+	}
+}
 
 void ClickButton::mousePressEvent(QMouseEvent *e)
 {
@@ -89,7 +127,7 @@ void ClickButton::mousePressEvent(QMouseEvent *e)
 		{
 			pause_VerticesAction = new QAction(this);
 			pause_VerticesAction->setText(QStringLiteral("Õ³Ìù"));
-			QObject::connect(pause_VerticesAction, SIGNAL(triggered()), this, SLOT(pauseAction()));
+			QObject::connect(pause_VerticesAction, SIGNAL(triggered()), this, SLOT(pasteAction()));
 			popMenu->addAction(pause_VerticesAction);
 			popMenu->addSeparator();
 		}
@@ -227,8 +265,9 @@ void ClickButton::copyAction()
 	_VerticesCopy->setRotate(_DrawNodeVertices->Rotate);
 }
 
-void ClickButton::pauseAction()
+void ClickButton::pasteAction()
 {
+	QtEdit::getInstance()->setWindowTitle(QtEdit::getInstance()->windowTitle().split("*").at(0) + "*");
 	VerticesCopy * _VerticesCopy = VerticesCopy::getinstance();
 	for (int i = 0; i < 5; i ++)
 	{
@@ -520,4 +559,6 @@ void ClickButton::UpdateVertices()
 
 	
 }
+
+
 
