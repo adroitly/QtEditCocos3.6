@@ -54,6 +54,8 @@ private slots:
 	void DelFrame();
 	//void focusInEvent(QFocusEvent *);
 	//void focusOutEvent(QFocusEvent *);
+	void copyAction();
+	void pauseAction();
 	void FreeBox();
 private:
 	int _row;
@@ -64,6 +66,8 @@ private:
 	QAction * delete_AllAction;
 	QAction * delete_LineAction;
 	QAction * free_BoxAction;
+	QAction * copy_VerticesAction;
+	QAction * pause_VerticesAction;
 	QMenu* popMenu;
 	QWidget * _parent;
 	int _line_ID;

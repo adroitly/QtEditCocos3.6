@@ -111,6 +111,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClCompile Include="Classes\SQLite\sqlite3.c" />
     <ClCompile Include="Classes\SQLite\TableDetail.cpp" />
     <ClCompile Include="Classes\StringUtil.cpp" />
+    <ClCompile Include="Classes\VerticesCopy.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_CCQApplication.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -222,6 +223,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ClInclude Include="Classes\SQLite\sqlite3ext.h" />
     <ClInclude Include="Classes\SQLite\TableDetail.h" />
     <ClInclude Include="Classes\StringUtil.h" />
+    <ClInclude Include="Classes\VerticesCopy.h" />
     <ClInclude Include="GeneratedFiles\ui_qtedit.h" />
   </ItemGroup>
   <ItemGroup>

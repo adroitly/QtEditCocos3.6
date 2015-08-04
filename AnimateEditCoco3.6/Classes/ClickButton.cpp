@@ -1,5 +1,5 @@
 #include "ClickButton.h"
-
+#include "VerticesCopy.h"
 #include "qtedit.h"
 #include "qmessagebox.h"
 static QtEdit * _QtEdit;
@@ -85,8 +85,23 @@ void ClickButton::mousePressEvent(QMouseEvent *e)
 
 		popMenu = new QMenu(this);
 
+		if (VerticesCopy::getinstance()->is_has_copy())
+		{
+			pause_VerticesAction = new QAction(this);
+			pause_VerticesAction->setText(QStringLiteral("粘贴"));
+			QObject::connect(pause_VerticesAction, SIGNAL(triggered()), this, SLOT(pauseAction()));
+			popMenu->addAction(pause_VerticesAction);
+			popMenu->addSeparator();
+		}
+
 		if (_is_Frame)
 		{
+			copy_VerticesAction = new QAction(this);
+			copy_VerticesAction->setText(QStringLiteral("复制"));
+			QObject::connect(copy_VerticesAction, SIGNAL(triggered()), this, SLOT(copyAction()));
+			popMenu->addAction(copy_VerticesAction);
+			popMenu->addSeparator();
+
 			one_BoxAction = new QAction(this);
 			one_BoxAction->setText(QStringLiteral("删除当前盒子"));
 			QObject::connect(one_BoxAction, SIGNAL(triggered()), this, SLOT(DelAction()));
@@ -198,6 +213,38 @@ void ClickButton::DelLine()
 	
 }
 
+void ClickButton::copyAction()
+{
+	VerticesCopy * _VerticesCopy = VerticesCopy::getinstance();
+	_VerticesCopy->setRelativeRotateVertices(_DrawNodeVertices->RelativeRotateVertices);
+	_VerticesCopy->setRelativevertices(_DrawNodeVertices->Relativevertices);
+	_VerticesCopy->set_last_width(_DrawNodeVertices->_last_Width);
+	_VerticesCopy->set_last_height(_DrawNodeVertices->_last_Height);
+	_VerticesCopy->set_last_ScallX(_DrawNodeVertices->_last_ScallX);
+	_VerticesCopy->set_last_ScallY(_DrawNodeVertices->_last_ScallY);
+	_VerticesCopy->set_is_null(_is_null);
+	_VerticesCopy->set_is_has_copy(true);
+	_VerticesCopy->setRotate(_DrawNodeVertices->Rotate);
+}
+
+void ClickButton::pauseAction()
+{
+	VerticesCopy * _VerticesCopy = VerticesCopy::getinstance();
+	for (int i = 0; i < 5; i ++)
+	{
+		_DrawNodeVertices->RelativeRotateVertices[i].set(_VerticesCopy->RelativeRotateVertices[i]);
+		_DrawNodeVertices->Relativevertices[i].set(_VerticesCopy->Relativevertices[i]);
+	}
+	_DrawNodeVertices->_last_Height = _VerticesCopy->get_last_height();
+	_DrawNodeVertices->_last_Width = _VerticesCopy->get_last_width();
+	_DrawNodeVertices->_last_ScallX = _VerticesCopy->get_last_ScallX();
+	_DrawNodeVertices->_last_ScallY = _VerticesCopy->get_last_ScallY();
+	_DrawNodeVertices->Rotate = _VerticesCopy->getRotate();
+	_is_null = _VerticesCopy->is_null();
+	_is_Frame = true;
+	setButtonColor();
+	Click_ED(true);
+}
 //void ClickButton::focusInEvent(QFocusEvent *e)
 //{
 //	_QtEdit->selectCol = _col;
@@ -473,3 +520,4 @@ void ClickButton::UpdateVertices()
 
 	
 }
+

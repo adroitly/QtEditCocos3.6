@@ -429,7 +429,10 @@ void QtEdit::importSpine()
 			//ui.dockWidget->setWindowTitle(animation_list.at(0));
 			//setPerWiget(_DrawLayer->getMySpineDuration() * oneFPX);
 			//从.data文件中导入数据
+			QMessageBox message(QMessageBox::NoIcon, codec->toUnicode("导入数据中，请耐心等待片刻"), "");
+			message.show();
 			Init();
+			message.clickedButton();
 			std::string str;
 			std::string _ani_name;
 			int _len;
@@ -806,7 +809,10 @@ void QtEdit::import()
 			//从.data文件中导入数据
 			int i, j;
 			bool Is_has = false;
+			QMessageBox message(QMessageBox::NoIcon, codec->toUnicode("导入数据中，请耐心等待片刻"), "");
+			message.show();
 			Init();
+			message.clickedButton();
 			std::string str;
 			std::string _ani_name;
 			int _len;

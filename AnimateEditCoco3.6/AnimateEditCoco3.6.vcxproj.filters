@@ -143,6 +143,9 @@
     <ClCompile Include="Classes\SpineIncl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Classes\VerticesCopy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="qtedit.ui">
@@ -244,6 +247,9 @@
       <Filter>CocosQtPort</Filter>
     </ClInclude>
     <ClInclude Include="Classes\SpineIncl.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\VerticesCopy.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
