@@ -1925,6 +1925,7 @@ void QtEdit::ClickToRepaintBar()
 	ui.Box_Height_RE->setText(QString("%2").arg(box_height));
 	_DrawLayer->setSpritePosition(_Width, _Height, _ScallX, _ScallY);
 
+	ui.Is_show->setText(_allClickButton.at(selectRow).at(selectCol)->isNULL() == true ? "false" : "true");
 
 
 }

@@ -320,8 +320,8 @@
     <widget class="QPushButton" name="PauseButton">
      <property name="geometry">
       <rect>
-       <x>90</x>
-       <y>260</y>
+       <x>86</x>
+       <y>245</y>
        <width>75</width>
        <height>23</height>
       </rect>
@@ -524,8 +524,8 @@
     <widget class="QLabel" name="label_22">
      <property name="geometry">
       <rect>
-       <x>100</x>
-       <y>196</y>
+       <x>99</x>
+       <y>176</y>
        <width>54</width>
        <height>21</height>
       </rect>
@@ -542,8 +542,8 @@
     <widget class="QLineEdit" name="Rotate">
      <property name="geometry">
       <rect>
-       <x>88</x>
-       <y>218</y>
+       <x>87</x>
+       <y>198</y>
        <width>71</width>
        <height>20</height>
       </rect>
@@ -1070,6 +1070,46 @@
      </property>
      <property name="text">
       <string>1</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_15">
+     <property name="geometry">
+      <rect>
+       <x>319</x>
+       <y>123</y>
+       <width>71</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>是否显示</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="Is_show">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>318</x>
+       <y>151</y>
+       <width>71</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>true</string>
+     </property>
+     <property name="readOnly">
+      <bool>false</bool>
+     </property>
+     <property name="clearButtonEnabled">
+      <bool>false</bool>
      </property>
     </widget>
    </widget>
