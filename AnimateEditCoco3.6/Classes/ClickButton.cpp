@@ -61,14 +61,18 @@ void ClickButton::keyPressEvent(QKeyEvent *e)
 	{
 		KeyV_Is_ON = true;
 	}
-	if (KeyC_Is_ON == true && KeyCtrl_Is_ON == true && KeyV_Is_ON == false)
+	if (KeyCtrl_Is_ON && e->key() == Qt::Key_S)
+	{
+		QtEdit::getInstance()->saveAllData();
+	}
+	else if (KeyC_Is_ON == true && KeyCtrl_Is_ON == true && KeyV_Is_ON == false)
 	{
 		if (_is_Frame)
 		{
 			copyAction();
 		}
 	}
-	if (KeyV_Is_ON == true && KeyCtrl_Is_ON == true && KeyC_Is_ON == false)
+	else if (KeyV_Is_ON == true && KeyCtrl_Is_ON == true && KeyC_Is_ON == false)
 	{
 		if (VerticesCopy::getinstance()->is_has_copy())
 		{
@@ -215,6 +219,15 @@ void ClickButton::DelAction()
 	{
 		_QtEdit->_allClickButton.at(i).at(_col - 1)->_DrawNodeVertices->updateRetlativeVertices(_IN_Width , _IN_Height , _IN_ScallX , _IN_ScallY);
 	}
+
+	if (_QtEdit->ui.PauseButton->text().toStdString() == _Pausetext)
+	{
+		_QtEdit->pausebuttonclick();
+	}
+	if (_QtEdit->selectRow != -1 && _QtEdit->selectRow < _QtEdit->_allClickButton.size() && _QtEdit->selectCol < _QtEdit->_allClickButton.at(0).size())
+	{
+		_QtEdit->_allClickButton.at(_QtEdit->selectRow).at(_QtEdit->selectCol)->Click_ED(false);
+	}
 	Click_ED(true);
 }
 
@@ -289,7 +302,19 @@ void ClickButton::pasteAction()
 	_is_null = _VerticesCopy->is_null();
 	_is_Frame = true;
 	setButtonColor();
-	Click_ED(true);
+	if (_QtEdit->ui.PauseButton->text().toStdString() == _Pausetext)
+	{
+		_QtEdit->pausebuttonclick();
+	}
+	if (_row != 0)
+	{
+		if (_QtEdit->selectRow != -1 && _QtEdit->selectRow < _QtEdit->_allClickButton.size() && _QtEdit->selectCol < _QtEdit->_allClickButton.at(0).size())
+		{
+			_QtEdit->_allClickButton.at(_QtEdit->selectRow).at(_QtEdit->selectCol)->Click_ED(false);
+		}
+		Click_ED(true);
+	}
+	//Click_ED(true);
 }
 //void ClickButton::focusInEvent(QFocusEvent *e)
 //{
@@ -473,7 +498,13 @@ void ClickButton::UpdateVertices()
 			_DrawNodeVertices->_last_Width = _IN_Width;
 			_DrawNodeVertices->_last_ScallX = _IN_ScallX;
 			_DrawNodeVertices->_last_ScallY = _IN_ScallY;
+			_is_null = false;
 			//_DrawNodeVertices->updateRetlativeVertices(_x, _y, _sx, _sy); 
+		}
+		//上一个是不显示的，则这个也不显示
+		else if (_lastbtn && _lastbtn->isNULL())
+		{
+			_is_null = true;
 		}
 		//没有就归零
 		else

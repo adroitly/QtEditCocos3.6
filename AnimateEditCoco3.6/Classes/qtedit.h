@@ -20,7 +20,7 @@ class QtEdit : public QMainWindow
 	Q_OBJECT
 
 public:
-	QtEdit(QWidget *parent = 0);
+	QtEdit(QWidget *parent       = 0);
 	~QtEdit();
 	void setGLView(QWidget *glWidget);
 	void ShowMsg(std::string);
@@ -35,7 +35,7 @@ public:
 	int floatToInt(float f);
 	double doubleToDoubletwo(double &f);
 public:
-	int SpiteS_Model = 0;
+	int SpiteS_Model             = 0;
 	bool Ctrl_Is_On;
 	QVector<QVector<ClickButton *>> _allClickButton;
 	QVector<QVector<ClickButton *>> _retaliteAllClickButton;
@@ -45,36 +45,37 @@ public:
 	QFrame * line;
 	QLabel * showline;
 	QScrollArea *scrollArea;
-	int FPX = 30;
+	int FPX                      = 30;
 	bool is_import;
 	Ui::QtEditClass ui;
-	int pu = 1;
+	int pu                       = 1;
 
 	int _now_linesize;
 	QTextCodec *codec;
-	bool Shift_is_ON = false;
-	bool Space_is_ON = false;
-	bool KeyS_is_ON = false;
+	bool Shift_is_ON             = false;
+	bool Space_is_ON             = false;
+	bool KeyS_is_ON              = false;
 	QStringList myBox_Comboxlist;
 	QRegExp  *double_rx;//正则表达式
 	QRegExpValidator * validtor;
 	bool Is_ChangeInputToBox;//
 	QStringList animation_list;
-	QString openC3bFile_Path = "./";
-	QString export_Byte_Path = "./";
-	QString export_Json_Path = "./";
-	QString openSpineFile_Path = "./";
+	QString openC3bFile_Path     = "./";
+	QString export_Byte_Path     = "./";
+	QString export_Json_Path     = "./";
+	QString openSpineFile_Path   = "./";
 	//当前点击的行列
-	int selectRow = -1;
-	int selectCol = -1;
-	int SeleteLineRow = -1;
-	bool isClickToChange = false;
-	int selectModel = 0;
-	double _Rotate_3d_x = 0;
-	double _Rotate_3d_y = _IN_Rotate3D_Y;
-	double _Rotate_3d_z = 0;
+	int selectRow                = -1;
+	int selectCol                = -1;
+	int SeleteLineRow            = -1;
+	bool isClickToChange         = false;
+	int selectModel              = 0;
+	double _Rotate_3d_x          = 0;
+	double _Rotate_3d_y          = _IN_Rotate3D_Y;
+	double _Rotate_3d_z          = 0;
 public slots:
 	void pausebuttonclick();
+	void saveAllData();
 private slots:
 	void yestButtonClick();
 	void import();
@@ -98,7 +99,6 @@ private slots:
 	void mousePressEvent(QMouseEvent *e);
 	void ActionHelp();
 	void deleteDrawnode();
-	void saveAllData();
 	void BoxChangeInput(QString str);
 	void export_byteData();
 	void wheelEvent(QWheelEvent *e);//鼠标滚动
@@ -143,8 +143,8 @@ private:
 	QStringList _lineVerHeader;
 
 	ClickButton * _tempClickButton;
-	//int _last_animaID = -1;
-	std::string _last_animaname = "";
+	//int _last_animaID          = -1;
+	std::string _last_animaname  = "";
 public:
 	HWND m_Parent;
 };

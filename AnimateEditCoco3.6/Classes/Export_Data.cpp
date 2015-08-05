@@ -34,6 +34,14 @@ void Export_Data::Export_JSONData(QVector<MyLineVector *> & _animateLineButton, 
 
 void Export_Data::Export_SaveData(QVector<MyLineVector *> & _animateLineButton, std::string file_name)
 {
+	_Export_Data->_animateLineButton = _animateLineButton;
+	_Export_Data->file_name = file_name;
+	//_Export_Data->run();//阻塞式
+	_Export_Data->start();//线程式
+}
+
+void Export_Data::run()
+{
 	Json::Value root_json;
 	Json::Value _anima_json;
 	Json::Value _line_anima;
@@ -68,7 +76,7 @@ void Export_Data::Export_SaveData(QVector<MyLineVector *> & _animateLineButton, 
 	int frame_model;
 	bool _is_frame;
 	bool _is_null;
-	for (k = 0; k < _animateLineButton.size(); k ++)
+	for (k = 0; k < _animateLineButton.size(); k++)
 	{
 
 		_saItem.clear();
@@ -78,13 +86,13 @@ void Export_Data::Export_SaveData(QVector<MyLineVector *> & _animateLineButton, 
 		_saItem["name"] = _ani_name;
 		//_saItem["ID"] = _anima_ID;
 		_line_anima.clear();
-		for (i = 0; i < _lineButton.size(); i ++)
+		for (i = 0; i < _lineButton.size(); i++)
 		{
 			ObjectItem.clear();
 			_line_ID = _lineButton.at(i).at(0)->getLineID();
 			ObjectItem["line_id"] = _line_ID;
 			_item_item.clear();
-			for (j = 0; j < _lineButton.at(i).size(); j ++)
+			for (j = 0; j < _lineButton.at(i).size(); j++)
 			{
 				_temp = _lineButton.at(i).at(j);
 				//if (!_temp->isFrame())
@@ -156,6 +164,7 @@ void Export_Data::Export_SaveData(QVector<MyLineVector *> & _animateLineButton, 
 	fout.flush();
 	fout.close();
 }
+
 
 void Export_Data::Export_ByteData(QVector<MyLineVector *> & _animateLineButton, std::string file_name)
 {
@@ -363,5 +372,6 @@ void Export_Data::Data_TO_Relatite(QVector<QVector<ClickButton *>> & _allButton,
 		}
 	}
 }
+
 
 
