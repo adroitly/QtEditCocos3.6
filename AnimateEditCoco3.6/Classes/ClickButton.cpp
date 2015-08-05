@@ -353,6 +353,10 @@ void ClickButton::FreeBox()
 		_is_null = true;
 	}
 	//_DrawNodeVertices->reset();
+	if (_QtEdit->selectRow != -1 && _QtEdit->selectRow < _QtEdit->_allClickButton.size() && _QtEdit->selectCol < _QtEdit->_allClickButton.at(0).size())
+	{
+		_QtEdit->_allClickButton.at(_QtEdit->selectRow).at(_QtEdit->selectCol)->Click_ED(false);
+	}
 	Click_ED(true);
 }
 
