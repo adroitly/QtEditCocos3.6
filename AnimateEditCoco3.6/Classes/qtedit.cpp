@@ -1590,6 +1590,7 @@ void QtEdit::AnimationTreeWidgetClick(QTreeWidgetItem * item, int column)
 		setPerWiget(FPX);
 		Init_ClickButton(col);
 	}
+	SeleteLineRow = 0;
 	selectRow = 0;
 	selectCol = 1;
 	if (_QtEdit->_allClickButton.at(0).size() > 0)
