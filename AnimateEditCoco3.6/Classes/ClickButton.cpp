@@ -508,6 +508,9 @@ void ClickButton::UpdateVertices()
 		//上一个是不显示的，则这个也不显示
 		else if (_lastbtn && _lastbtn->isNULL())
 		{
+			DEL_FREE_OBJ(_DrawNodeVertices);
+			_DrawNodeVertices = _lastbtn->_DrawNodeVertices->copy();
+			_DrawNodeVertices->Rotate = 0;
 			_is_null = true;
 		}
 		//没有就归零

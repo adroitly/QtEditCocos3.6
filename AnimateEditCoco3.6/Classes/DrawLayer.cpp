@@ -415,20 +415,20 @@ float oneDt;
 /************************************************************************/
 void DrawLayer::StartUpdate()
 {
-	mydt = 0.0;
-	//float _this_dt = 1.0;
-	float All_Time = 0.0;
-	if (1 == _QtEdit->SpiteS_Model)
-	{
-		All_Time = animate->getDuration();
-	}
-	else
-	{
-		All_Time = _MySpineDuration;
-	}
-	oneDt = All_Time / (All_Time * oneFPX);
-	float pe = All_Time / oneFPX;
-	this->schedule(schedule_selector(DrawLayer::ScheduMyUpdate), pe);
+	//mydt = 0.0;
+	////float _this_dt = 1.0;
+	//float All_Time = 0.0;
+	//if (1 == _QtEdit->SpiteS_Model)
+	//{
+	//	All_Time = animate->getDuration();
+	//}
+	//else
+	//{
+	//	All_Time = _MySpineDuration;
+	//}
+	//oneDt = All_Time / (All_Time * oneFPX);
+	//float pe = All_Time / oneFPX;
+	this->schedule(schedule_selector(DrawLayer::ScheduMyUpdate), 0.05);
 }
 /************************************************************************/
 /* ¹Ø±Õ×Ô¶¯                                                             */
