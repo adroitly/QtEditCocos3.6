@@ -1278,7 +1278,7 @@ void QtEdit::AnimationSlderChange()
 {
 	int a = ui.PencentageSlider->value();
 	a -- ;
-	if (SeleteLineRow != -1)
+	if (SeleteLineRow != -1 && SeleteLineRow < _allClickButton.size())
 	{
 		if (selectRow != -1)
 		{
@@ -1718,7 +1718,6 @@ void QtEdit::setParent(HWND parent)
 void QtEdit::AddTimeLine(int _linemodel)
 {
 	_lineVerHeader << getHeadName(_linemodel);
-	_LinesTableWidget->setVerticalHeaderLabels(_lineVerHeader);
 	int i = 0;
 	int _row = _LinesTableWidget->rowCount();
 	_row++;
@@ -1735,6 +1734,7 @@ void QtEdit::AddTimeLine(int _linemodel)
 		_temp_line.push_back(_Temp);
 	}
 	_allClickButton.push_back(_temp_line);
+	_LinesTableWidget->setVerticalHeaderLabels(_lineVerHeader);
 }
 
 void QtEdit::AddLineButton_Click()
