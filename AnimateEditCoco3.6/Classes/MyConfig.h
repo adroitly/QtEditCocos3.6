@@ -11,6 +11,8 @@
 #define  _TEN_ScallY			10.0
 #define  oneFPX					30.0
 #define	 PI						3.1415926535898
+#define  _Line_Btn_Width		40.0
+#define	 _Line_Btn_Height		20.0
 #define  _Effecttext			"Eff  "
 #define  _Bodytext				"body"
 #define  _Atttext				"Att  "

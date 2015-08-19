@@ -1729,8 +1729,8 @@ void QtEdit::AddTimeLine(int _linemodel)
 	{
 		_Temp = new ClickButton(_row - 1, i + 1, _linemodel);
 		_LinesTableWidget->setCellWidget(_row - 1, i, _Temp);
-		_LinesTableWidget->setRowHeight(_row - 1, 20);
-		_LinesTableWidget->setColumnWidth(i, 40);
+		_LinesTableWidget->setRowHeight(_row - 1, _Line_Btn_Height);
+		_LinesTableWidget->setColumnWidth(i, _Line_Btn_Width);
 		_temp_line.push_back(_Temp);
 	}
 	_allClickButton.push_back(_temp_line);
@@ -2018,8 +2018,8 @@ void QtEdit::Init_ClickButton(int col)
 					_lineVerHeader.push_back(getHeadName(_Temp->getFrameMode()));
 				}
 				_LinesTableWidget->setCellWidget(i, j, _Temp);
-				_LinesTableWidget->setRowHeight(i, 20);
-				_LinesTableWidget->setColumnWidth(j, 40);
+				_LinesTableWidget->setRowHeight(i, _Line_Btn_Height);
+				_LinesTableWidget->setColumnWidth(j, _Line_Btn_Width);
 				if (_Temp->isFrame())
 				{
 					_Temp->setButtonColor();
@@ -2034,8 +2034,8 @@ void QtEdit::Init_ClickButton(int col)
 					_lineVerHeader.push_back(getHeadName(_TempClick->getFrameMode()));
 				}
 				_LinesTableWidget->setCellWidget(i, j, _TempClick);
-				_LinesTableWidget->setRowHeight(i, 20);
-				_LinesTableWidget->setColumnWidth(j, 40);
+				_LinesTableWidget->setRowHeight(i, _Line_Btn_Height);
+				_LinesTableWidget->setColumnWidth(j, _Line_Btn_Width);
 				if (_TempClick->isFrame())
 				{
 					_TempClick->setButtonColor();
