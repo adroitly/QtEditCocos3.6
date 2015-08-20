@@ -1321,6 +1321,10 @@ void QtEdit::keyPressEvent(QKeyEvent *e)
 	{
 		KeyS_is_ON = true;
 	}
+	if (e->key() == Qt::Key_F5)
+	{
+		pausebuttonclick();
+	}
 	if (Ctrl_Is_On && KeyS_is_ON && _allClickButton.size() > 0)
 	{
 		QString str = windowTitle();

@@ -61,6 +61,10 @@ void ClickButton::keyPressEvent(QKeyEvent *e)
 	{
 		KeyV_Is_ON = true;
 	}
+	if (e->key() == Qt::Key_F5)
+	{
+		QtEdit::getInstance()->pausebuttonclick();
+	}
 	if (KeyCtrl_Is_ON && e->key() == Qt::Key_S)
 	{
 		QtEdit::getInstance()->saveAllData();
