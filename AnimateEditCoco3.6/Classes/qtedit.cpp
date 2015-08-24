@@ -355,7 +355,7 @@ void QtEdit::setRePosition(int a)
 
 void QtEdit::saveAllData()
 {
-	if (_allClickButton.size() > 0 )
+	if (_animateLineButton.size() > 0 )
 	{
 		QString str = _QtEdit->windowTitle();
 		str = str.split("*").at(0);
