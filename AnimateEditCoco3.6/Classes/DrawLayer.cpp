@@ -98,7 +98,6 @@ void DrawLayer::onTouchEnded(Touch *touch, Event *unused_event)
 	{
 		if (_select_row < _QtEdit->_allClickButton.size() && _QtEdit->_allClickButton.size() > 0 && _select_row != -1)
 		{
-			_QtEdit->setWindowTitle(_QtEdit->windowTitle().split("*").at(0) + "*");
 			UpdateToButton();
 		}
 		//this->myupdate();
@@ -112,11 +111,15 @@ void DrawLayer::UpdateToButton()
 	_tempbtn->_DrawNodeVertices->Rotate = 0.0;
 	_tempbtn->setFrame(true);
 	_tempbtn->setButtonColor();
-	//_tempbtn->_DrawNodeVertices->setVertices(Startpoint, Endpoint);
-	_tempbtn->_DrawNodeVertices->setRelativeVertices(Startpoint, Endpoint);
-	Vec2 posi(_QtEdit->ui.Width->text().toFloat(), _QtEdit->ui.Height->text().toFloat());
-	//_tempbtn->_DrawNodeVertices->setRelativeVertices(_tempbtn->_DrawNodeVertices->Vertices, posi);
-	_tempbtn->_DrawNodeVertices->setVerticeFromRelative(_tempbtn->_DrawNodeVertices->Relativevertices, posi);
+	if (_tempbtn->getRow() != 0)
+	{
+		_QtEdit->setWindowTitle(_QtEdit->windowTitle().split("*").at(0) + "*");
+		//_tempbtn->_DrawNodeVertices->setVertices(Startpoint, Endpoint);
+		_tempbtn->_DrawNodeVertices->setRelativeVertices(Startpoint, Endpoint);
+		Vec2 posi(_QtEdit->ui.Width->text().toFloat(), _QtEdit->ui.Height->text().toFloat());
+		//_tempbtn->_DrawNodeVertices->setRelativeVertices(_tempbtn->_DrawNodeVertices->Vertices, posi);
+		_tempbtn->_DrawNodeVertices->setVerticeFromRelative(_tempbtn->_DrawNodeVertices->Relativevertices, posi);
+	}
 	_tempbtn->_DrawNodeVertices->_last_Height = _QtEdit->ui.Height->text().toFloat();
 	_tempbtn->_DrawNodeVertices->_last_Width = _QtEdit->ui.Width->text().toFloat();
 	_tempbtn->_DrawNodeVertices->_last_ScallX = _QtEdit->ui.ScallX->text().toFloat();
