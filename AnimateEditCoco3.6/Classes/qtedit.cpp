@@ -421,18 +421,19 @@ void QtEdit::importSpine()
 		_DrawLayer->updateMySpine(file_name.toStdString(), (fi.path() + "/" + fi.fileName().split(".").at(0) + ".json").toStdString());
 		SpiteS_Model = 2;
 		AddAnimationList(file_name);
-
+		ui.dockWidget->setWindowTitle("");
 		if (animation_list.size() != 0)
 		{
 			is_import = true;
 			_DrawLayer->setMySpineAnimation(animation_list.at(0).toStdString().c_str(), true);
-			//ui.dockWidget->setWindowTitle(animation_list.at(0));
+			ui.dockWidget->setWindowTitle(codec->toUnicode("请选择一个动作"));
 			//setPerWiget(_DrawLayer->getMySpineDuration() * oneFPX);
 			//从.data文件中导入数据
 			QMessageBox message(QMessageBox::NoIcon, codec->toUnicode("导入数据中，请耐心等待片刻"), "");
 			message.show();
 			Init();
 			CheckAnimation();
+			_allClickButton.resize(0);
 			message.clickedButton();
 			std::string str;
 			std::string _ani_name;
@@ -482,7 +483,7 @@ void QtEdit::importSpine()
 					}
 					if (!Is_has)
 					{
-						//DEL_FREE_OBJ(_animateLineButton.at(i));
+						DEL_FREE_OBJ(_animateLineButton[i]);
 						_animateLineButton.removeAt(i);
 						i--;
 					}
@@ -503,7 +504,7 @@ void QtEdit::importSpine()
 }
 void QtEdit::export_byteData()
 {
-	if (_allClickButton.size() <= 0)
+	if (_animateLineButton.size() <= 0)
 	{
 		QMessageBox::about(this, tr("information"), codec->toUnicode("当前没有导入资源,请先导入资源"));
 		//QMessageBox::StandardButton rb = QMessageBox::question(NULL, "information", codec->toUnicode("当前没有导入资源，是否先导入资源?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
@@ -600,6 +601,16 @@ void QtEdit::closeEvent(QCloseEvent *event)
 		event->accept();  //接受退出信号，程序退出
 	}
 }
+void QtEdit::resizeEvent(QResizeEvent * event)
+{
+	int _width = this->width();
+	int _height = this->height();
+	buttonWidget->setGeometry(QRect(0, 20, 8000, _height - 720));
+	_LinesTableWidget->setGeometry(QRect(0, 45, _width - 70, _height - 800));
+	scrollArea->setGeometry(QRect(0, 20, _width, _height - 740));
+	ui.showmessage->setGeometry(QRect(0, 0, ui.OutWiget->width(), ui.OutWiget->height()));
+
+}
 void QtEdit::setGLView(QWidget *glWidget)
 {
 	_glWidget = glWidget;
@@ -609,7 +620,6 @@ void QtEdit::setGLView(QWidget *glWidget)
 		this->setParent((HWND)glWidget->winId());
  		ui.SceneWidget->setWidget(_glWidget);
 		_glWidget->setFixedHeight(639);
-		//ui.SceneWidget->setTitleBarWidget(_glWidget);
  		setCentralWidget(ui.SceneWidget);
 	}
 }
@@ -683,7 +693,7 @@ void QtEdit::MySQLite(bool is_Update /* = false */, QString data /* = 0  */, QSt
 void QtEdit::exportData()
 {
 	//ShowMsg("Export");
-	if (_allClickButton.size() <= 0)
+	if (_animateLineButton.size() <= 0)
 	{
 		//QMessageBox::StandardButton rb = QMessageBox::question(NULL, "information", codec->toUnicode("当前没有导入资源，是否先导入资源?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 		//if (rb == QMessageBox::Yes)
@@ -807,11 +817,12 @@ void QtEdit::import()
 		_DrawLayer->DrawInitPosi();
 
 		AddAnimationList(file_name);
-
+		ui.dockWidget->setWindowTitle("");
 		if (animation_list.size() != 0)
 		{
+			ui.dockWidget->setWindowTitle(codec->toUnicode("请选择一个动作"));
 			_DrawLayer->updateMySprite3D(file_name.toStdString(), file_name.split(".").at(0).toStdString() + ".png", animation_list.at(0).toStdString());
-			ui.dockWidget->setWindowTitle(animation_list.at(0));
+			//ui.dockWidget->setWindowTitle(animation_list.at(0));
 			FPX = _DrawLayer->animate->getDuration() * oneFPX;
 			//setPerWiget(FPX);
 			//从.data文件中导入数据
@@ -821,6 +832,7 @@ void QtEdit::import()
 			message.show();
 			Init();
 			CheckAnimation();
+			_allClickButton.resize(0);
 			message.clickedButton();
 			std::string str;
 			std::string _ani_name;
@@ -868,6 +880,7 @@ void QtEdit::import()
 					if (!Is_has)
 					{
 						//DEL_FREE_OBJ(_animateLineButton.at(i));
+						DEL_FREE_OBJ(_animateLineButton[i]);
 						_animateLineButton.removeAt(i);
 						i--;
 					}
@@ -926,6 +939,7 @@ void QtEdit::CheckAnimation()
 		if (false == _is_has)
 		{
 			//DEL_FREE_OBJ(_ani_line);
+			DEL_FREE_OBJ(_animateLineButton[i]);
 			_animateLineButton.removeAt(i);
 			i--;
 		}
@@ -1827,7 +1841,7 @@ void QtEdit::AddLineButton_Click()
 	}
 	else
 	{
-		QMessageBox::about(this, tr("information"), codec->toUnicode("当前没有导入资源,请先导入资源"));
+		QMessageBox::about(this, tr("information"), codec->toUnicode("当前没有导入资源或未选中一个动作,请确认"));
 	}
 	
 }

@@ -121,6 +121,8 @@ protected:
 
 	QString getHeadName(int _model);
 	void deletePro();
+
+	void resizeEvent(QResizeEvent * event);
 private:
 	
 	AppDelegate         *_appDelegate;
