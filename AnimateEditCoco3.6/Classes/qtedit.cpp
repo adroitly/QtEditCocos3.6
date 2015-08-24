@@ -609,6 +609,7 @@ void QtEdit::resizeEvent(QResizeEvent * event)
 	_LinesTableWidget->setGeometry(QRect(0, 45, _width - 70, _height - 800));
 	scrollArea->setGeometry(QRect(0, 20, _width, _height - 740));
 	ui.showmessage->setGeometry(QRect(0, 0, ui.OutWiget->width(), ui.OutWiget->height()));
+	ui.AnimationtreeWidget->setGeometry(QRect(0, 0, ui.dockWidget->width(), ui.dockWidget->height()));
 
 }
 void QtEdit::setGLView(QWidget *glWidget)
