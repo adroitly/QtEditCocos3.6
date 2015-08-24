@@ -17,6 +17,7 @@ SpineIncl * SpineIncl::getinstance()
 	if (_SpineIncl == NULL)
 	{
 		_SpineIncl = new SpineIncl();
+		_SpineIncl->autorelease();
 	}
 	return _SpineIncl;
 }

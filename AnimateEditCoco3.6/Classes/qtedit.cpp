@@ -432,6 +432,7 @@ void QtEdit::importSpine()
 			QMessageBox message(QMessageBox::NoIcon, codec->toUnicode("导入数据中，请耐心等待片刻"), "");
 			message.show();
 			Init();
+			CheckAnimation();
 			message.clickedButton();
 			std::string str;
 			std::string _ani_name;
@@ -483,6 +484,7 @@ void QtEdit::importSpine()
 					{
 						//DEL_FREE_OBJ(_animateLineButton.at(i));
 						_animateLineButton.removeAt(i);
+						i--;
 					}
 				}
 			}
@@ -537,6 +539,10 @@ void QtEdit::export_byteData()
 	}
 	
 }
+void QtEdit::deletePro()
+{
+	DEL_FREE_OBJ(scrollArea->parent());
+}
 void QtEdit::closeEvent(QCloseEvent *event)
 {
 	int i;
@@ -556,6 +562,7 @@ void QtEdit::closeEvent(QCloseEvent *event)
 			{
 				DEL_FREE_OBJ(_animateLineButton.at(i));
 			}
+			deletePro();
 			exit(0);
 			qApp->quit();
 			event->accept();  //接受退出信号，程序退出
@@ -567,6 +574,7 @@ void QtEdit::closeEvent(QCloseEvent *event)
 			{
 				DEL_FREE_OBJ(_animateLineButton.at(i));
 			}
+			deletePro();
 			exit(0);
 			qApp->quit();
 			event->accept();  //接受退出信号，程序退出
@@ -812,6 +820,7 @@ void QtEdit::import()
 			QMessageBox message(QMessageBox::Warning, codec->toUnicode("导入数据中，请耐心等待片刻"), "");
 			message.show();
 			Init();
+			CheckAnimation();
 			message.clickedButton();
 			std::string str;
 			std::string _ani_name;
@@ -860,6 +869,7 @@ void QtEdit::import()
 					{
 						//DEL_FREE_OBJ(_animateLineButton.at(i));
 						_animateLineButton.removeAt(i);
+						i--;
 					}
 				}
 			}
@@ -880,6 +890,48 @@ void QtEdit::import()
 		//点的是取消
 	}
 }
+
+void QtEdit::CheckAnimation()
+{
+	int i, j;
+	int len;
+	std::string str;
+	std::string _ani_name;
+	MyLineVector * _ani_line;
+	bool _is_has;
+	for (i = 0; i < _animateLineButton.size(); i++)
+	{
+		_ani_line = _animateLineButton.at(i);
+		str = _ani_line->_anima_Name;
+		len = str.find_last_of("/");
+		str = str.substr(len + 1);
+		_is_has = false;
+		for (j = 0; j < animation_list.size(); j ++)
+		{
+			_ani_name = animation_list.at(j).toStdString();
+			len = _ani_name.find_last_of("/");
+			_ani_name = _ani_name.substr(len + 1);
+			len = _ani_name.find_last_of(".");
+			if (-1 != len)
+			{
+				_ani_name = _ani_name.substr(0, len);
+			}
+			if (_ani_name == str)
+			{
+				_is_has = true;
+				break;;
+			}
+
+		}
+		if (false == _is_has)
+		{
+			//DEL_FREE_OBJ(_ani_line);
+			_animateLineButton.removeAt(i);
+			i--;
+		}
+	}
+}
+
 void QtEdit::setPerWiget(int max)
 {
 	SeleteLineRow = -1;

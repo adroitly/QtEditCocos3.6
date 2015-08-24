@@ -34,6 +34,7 @@ public:
 	void Update_DrawLayer();
 	int floatToInt(float f);
 	double doubleToDoubletwo(double &f);
+	void CheckAnimation();
 public:
 	int SpiteS_Model             = 0;
 	bool Ctrl_Is_On;
@@ -119,6 +120,7 @@ protected:
 	bool Is_Point_Into(QPoint po, QPoint st, QPoint en);
 
 	QString getHeadName(int _model);
+	void deletePro();
 private:
 	
 	AppDelegate         *_appDelegate;

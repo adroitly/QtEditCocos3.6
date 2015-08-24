@@ -318,6 +318,7 @@ void Export_Data::Export_ByteData(QVector<MyLineVector *> & _animateLineButton, 
 		}
 		_ByteArray->writeUnsignedInt(_anima->getLength());
 		_ByteArray->writeBytes(_anima);
+		delete _anima;
 	}
 	FILE *fp;
 	fp = fopen(file_name.c_str(), "wb");
