@@ -11,5 +11,6 @@ public:
 	SliderClass(Qt::Orientation orientation, QWidget *parent = 0);
 protected:
 	void mousePressEvent(QMouseEvent *ev);
+	void mouseMoveEvent(QMouseEvent *ev);
 };
 

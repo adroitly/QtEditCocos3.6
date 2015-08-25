@@ -29,4 +29,13 @@ void SliderClass::mousePressEvent(QMouseEvent *ev)
 	{
 		QtEdit::getInstance()->pausebuttonclick();
 	}
+
+}
+
+void SliderClass::mouseMoveEvent(QMouseEvent *ev)
+{
+	QPoint mousepos = ev->pos();
+	int posi = mousepos.x() / _Line_Btn_Width;
+	QtEdit::getInstance()->PencentageSlider->setValue(posi + 1);
+	__super::mouseMoveEvent(ev);
 }
