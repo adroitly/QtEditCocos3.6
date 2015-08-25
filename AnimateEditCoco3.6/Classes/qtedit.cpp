@@ -24,6 +24,7 @@
 #include "SQLite/DBUtil.h"
 #include "MyConfig.h"
 #include "Export_Data.h"
+
 USING_NS_CC;
 static QtEdit* _QtEdit = NULL;
 static DrawLayer *_DrawLayer = NULL;
@@ -52,8 +53,17 @@ QtEdit::QtEdit(QWidget *parent)
 	ui.AnimationtreeWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 	ui.AnimationtreeWidget->header()->setStretchLastSection(true);
 	ui.dockWidgetContents_5->setUpdatesEnabled(TRUE);
-	//ui.PencentageSlider->setGeometry(0, 0, this->width(), 40);
+	//PencentageSlider->setGeometry(0, 0, this->width(), 40);
 	codec = QTextCodec::codecForName("GB18030");
+
+	PencentageSlider = new SliderClass(ui.dockWidgetContents_5);
+	PencentageSlider->setObjectName(QStringLiteral("PencentageSlider"));
+	PencentageSlider->setGeometry(QRect(0, 0, 960, 51));
+	PencentageSlider->setMaximumSize(QSize(16777215, 16777215));
+	PencentageSlider->setMinimum(0);
+	PencentageSlider->setMaximum(99);
+	PencentageSlider->setValue(0);
+	PencentageSlider->setOrientation(Qt::Horizontal);
 	AddCao();
 	MySQLite();
 	AddScallAreaWidget();
@@ -82,9 +92,9 @@ void QtEdit::AddCao()
 	QObject::connect(ui.Re_Height, SIGNAL(textEdited(QString)), this, SLOT(ReChangeInput()));
 	QObject::connect(ui.PauseButton, SIGNAL(clicked()), this, SLOT(pausebuttonclick()));
 	QObject::connect(ui.showmessage, SIGNAL(textChanged()), this, SLOT(showmessageChange()));
-	QObject::connect(ui.PencentageSlider, SIGNAL(valueChanged(int)), this, SLOT(AnimationSlderChange()));
+	QObject::connect(PencentageSlider, SIGNAL(valueChanged(int)), this, SLOT(AnimationSlderChange()));
 	QObject::connect(ui.AnimationtreeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(AnimationTreeWidgetClick(QTreeWidgetItem*, int)));
-	QObject::connect(ui.PencentageSlider, SIGNAL(actionTriggered(int)), this, SLOT(AnimationSlderClick(int)));
+	//QObject::connect(PencentageSlider, SIGNAL(actionTriggered(int)), this, SLOT(AnimationSlderClick(int)));
 	QObject::connect(ui.actionHelp, SIGNAL(triggered()), this, SLOT(ActionHelp()));
 	QObject::connect(ui.exportaction, SIGNAL(triggered()), this, SLOT(exportData()));
 	QObject::connect(ui.openaction, SIGNAL(triggered()), this, SLOT(openData()));
@@ -921,10 +931,10 @@ void QtEdit::CheckAnimation()
 void QtEdit::setPerWiget(int max)
 {
 	SeleteLineRow = -1;
-	ui.PencentageSlider->setGeometry(QRect(40, 0, FPX * 40, 50));
-	ui.PencentageSlider->setMaximum(max);
-	ui.PencentageSlider->setMinimum(1);
-	ui.PencentageSlider->setValue(0);
+	PencentageSlider->setGeometry(QRect(40, 0, FPX * 40, 50));
+	PencentageSlider->setMaximum(max);
+	PencentageSlider->setMinimum(1);
+	PencentageSlider->setValue(0);
 
 	_LinesTableWidget->setColumnCount(FPX);
 	_LinesTableWidget->setRowCount(0);
@@ -1098,10 +1108,10 @@ void QtEdit::AddScallAreaWidget()
 	scallbar = scrollArea->horizontalScrollBar();
 	buttonWidget->setGeometry(QRect(0, 0, 8000, 210));
 
-	ui.PencentageSlider->setParent(buttonWidget);
-	ui.PencentageSlider->setGeometry(QRect(40, 0, FPX * 40, 50));
-	ui.PencentageSlider->setMinimum(1);
-	ui.PencentageSlider->setMaximum(30);
+	PencentageSlider->setParent(buttonWidget);
+	PencentageSlider->setGeometry(QRect(40, 0, FPX * 40, 50));
+	PencentageSlider->setMinimum(1);
+	PencentageSlider->setMaximum(30);
 
 	_LinesTableWidget = new QTableWidget(buttonWidget);
 	//QStringList header;
@@ -1316,7 +1326,7 @@ void QtEdit::AnimationSlderClick(int per)
 //进度条值变换了
 void QtEdit::AnimationSlderChange()
 {
-	int a = ui.PencentageSlider->value();
+	int a = PencentageSlider->value();
 	a -- ;
 	if (SeleteLineRow != -1 && SeleteLineRow < _allClickButton.size())
 	{
@@ -1649,7 +1659,7 @@ void QtEdit::AnimationTreeWidgetClick(QTreeWidgetItem * item, int column)
 	}
 	//_QtEdit->_allClickButton.at(selectRow).at(0)->Click_ED(true);
 	SpriteChange();
-	//ui.PencentageSlider->setValue(1);
+	//PencentageSlider->setValue(1);
 	
 }
 

@@ -11,6 +11,7 @@
 #include "qstandarditemmodel.h"
 #include "MyLineVector.h"
 #include "DrawLayer.h"
+#include "SliderClass.h"
 class AppDelegate;
 namespace Ui {
 	class QtEdit;
@@ -74,6 +75,7 @@ public:
 	double _Rotate_3d_x          = 0;
 	double _Rotate_3d_y          = _IN_Rotate3D_Y;
 	double _Rotate_3d_z          = 0;
+	SliderClass * PencentageSlider;
 public slots:
 	void pausebuttonclick();
 	void saveAllData();

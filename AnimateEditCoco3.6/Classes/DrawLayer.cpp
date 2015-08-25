@@ -401,14 +401,14 @@ void DrawLayer::ScheduMyUpdate(float dt)
 {
 	if (_QtEdit->_allClickButton.size() > 0)
 	{
-		int per_value = _QtEdit->ui.PencentageSlider->value();
+		int per_value = _QtEdit->PencentageSlider->value();
 		per_value++;
 		if (per_value > _QtEdit->FPX)
 		{
 			per_value = 1;
 		}
 
-		_QtEdit->ui.PencentageSlider->setValue(per_value);
+		_QtEdit->PencentageSlider->setValue(per_value);
 	}
 }
 

@@ -381,7 +381,7 @@ void ClickButton::Click_ED(bool is_click /*= false*/)
 			_QtEdit->SeleteLineRow = _row;
 		}
 		_QtEdit->isClickToChange = true;
-		_QtEdit->ui.PencentageSlider->setValue(_col);
+		_QtEdit->PencentageSlider->setValue(_col);
 		setText(QStringLiteral("‡å"));
 		for (i = 0; i < _QtEdit->_allClickButton.size(); i ++)
 		{
