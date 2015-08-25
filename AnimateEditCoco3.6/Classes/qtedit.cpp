@@ -61,20 +61,6 @@ QtEdit::QtEdit(QWidget *parent)
 
 void QtEdit::AddCao()
 {
-	//QObject::connect(importaction, SIGNAL(triggered()), QtEditClass, SLOT(import()));
-	//QObject::connect(Width, SIGNAL(textEdited(QString)), QtEditClass, SLOT(ChangeInput()));
-	//QObject::connect(Height, SIGNAL(textEdited(QString)), QtEditClass, SLOT(ChangeInput()));
-	//QObject::connect(ScallX, SIGNAL(textEdited(QString)), QtEditClass, SLOT(ChangeInput()));
-	//QObject::connect(ScallY, SIGNAL(textEdited(QString)), QtEditClass, SLOT(ChangeInput()));
-	//QObject::connect(PauseButton, SIGNAL(clicked()), QtEditClass, SLOT(pausebuttonclick()));
-	//QObject::connect(showmessage, SIGNAL(textChanged()), QtEditClass, SLOT(showmessageChange()));
-	//QObject::connect(PencentageSlider, SIGNAL(valueChanged(int)), QtEditClass, SLOT(AnimationSlderChange()));
-	//QObject::connect(AnimationtreeWidget, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), QtEditClass, SLOT(AnimationTreeWidgetClick(QTreeWidgetItem*, int)));
-	//QObject::connect(PencentageSlider, SIGNAL(actionTriggered(int)), QtEditClass, SLOT(AnimationSlderClick(int)));
-	//QObject::connect(actionHelp, SIGNAL(triggered()), QtEditClass, SLOT(ActionHelp()));
-	//QObject::connect(exportaction, SIGNAL(triggered()), QtEditClass, SLOT(exportData()));
-	//QObject::connect(openaction, SIGNAL(triggered()), QtEditClass, SLOT(openData()));
-	//QObject::connect(closeaction, SIGNAL(triggered()), QtEditClass, SLOT(close()));
 	QObject::connect(ui.importaction, SIGNAL(triggered()), this, SLOT(import()));
 	QObject::connect(ui.import_Spine, SIGNAL(triggered()), this, SLOT(importSpine()));
 
@@ -92,7 +78,6 @@ void QtEdit::AddCao()
 	QObject::connect(ui.ScallX, SIGNAL(textEdited(QString)), this, SLOT(ChangeInput()));
 	QObject::connect(ui.ScallY, SIGNAL(textEdited(QString)), this, SLOT(ChangeInput()));
 	QObject::connect(ui.Line_ID, SIGNAL(textEdited(QString)), this, SLOT(LineID_ChangeInput()));
-	//QObject::connect(ui.Width, SIGNAL(wheelEvent(QWheelEvent *)), this, SLOT(wheelEvent(QWheelEvent*)));
 	QObject::connect(ui.Re_Width, SIGNAL(textEdited(QString)), this, SLOT(ReChangeInput()));
 	QObject::connect(ui.Re_Height, SIGNAL(textEdited(QString)), this, SLOT(ReChangeInput()));
 	QObject::connect(ui.PauseButton, SIGNAL(clicked()), this, SLOT(pausebuttonclick()));
@@ -111,23 +96,8 @@ void QtEdit::AddCao()
 	QObject::connect(ui.En_Width, SIGNAL(textEdited(QString)), this, SLOT(BoxChangeInput(QString)));
 	QObject::connect(ui.En_Height, SIGNAL(textEdited(QString)), this, SLOT(BoxChangeInput(QString)));
 	QObject::connect(ui.Rotate, SIGNAL(textEdited(QString)), this, SLOT(BoxChangeInput(QString)));
-	//double_rx = new QRegExp(_Input_EXP);
-	//validtor = new QRegExpValidator(*double_rx);
-	//ui.St_Width->setValidator(validtor);
-	//ui.St_Height->setValidator(validtor);
-	//ui.En_Width->setValidator(validtor);
-	//ui.En_Height->setValidator(validtor);
-	//ui.Rotate->setValidator(validtor);
-	//ui.Width->setValidator(validtor);
-	//ui.Height->setValidator(validtor);
-	//ui.ScallX->setValidator(validtor);
-	//ui.ScallY->setValidator(validtor);
-	//QDir dir;
 	ui.Width->setText(QString("%2").arg(_IN_Width));
 	ui.Width->setText(QString("%2").arg(_IN_Height));
-	//ui.Re_Width->setValidator(validtor);
-	//ui.Re_Height->setValidator(validtor);
-
 }
 
 QtEdit::~QtEdit()
