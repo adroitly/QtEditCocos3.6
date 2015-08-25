@@ -19,6 +19,10 @@ void MySpine::UpdateMySpineOnDetail(MySpine * _temp, float mydt)
 {
 	int i;
 	self = _temp->getState();
+	if (!self)
+	{
+		return;
+	}
 	float previousDelta;
 	float delta = 0.02;
 	delta *= self->timeScale;

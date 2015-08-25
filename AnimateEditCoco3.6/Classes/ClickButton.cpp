@@ -259,6 +259,10 @@ void ClickButton::DelFrame()
 	{
 		_QtEdit->_allClickButton.at(i).at(_col - 1)->DoDelFrame();
 	}
+	if (_QtEdit->selectRow != -1 && _QtEdit->selectRow < _QtEdit->_allClickButton.size() && _QtEdit->selectCol < _QtEdit->_allClickButton.at(0).size())
+	{
+		_QtEdit->_allClickButton.at(_QtEdit->selectRow).at(_QtEdit->selectCol)->Click_ED(false);
+	}
 	Click_ED(true);
 }
 
@@ -423,6 +427,7 @@ void ClickButton::UpdateVertices()
 	int _lcha = 100000;
 	int _ncha = 100000;
 
+	int _rotate;
 
 	_lastbtn = NULL;
 	_nextbtn = NULL;
@@ -453,6 +458,7 @@ void ClickButton::UpdateVertices()
 		{
 			_lastbtn = _lastbtn->copy();
 			_lastbtn->_DrawNodeVertices->updateRetlativeVertices(_IN_Width, _IN_Height, _IN_ScallX, _IN_ScallY);
+			_rotate = _lastbtn->_DrawNodeVertices->Rotate;
 			for (i = 0; i < 5; i++)
 			{
 				_DrawNodeVertices->Vertices[i].set(_lastbtn->_DrawNodeVertices->Vertices[i]);
@@ -489,6 +495,8 @@ void ClickButton::UpdateVertices()
 					_tempPosi.set(_x, _y);
 					_DrawNodeVertices->RotateVertices[i].set(_tempPosi);
 
+					_rotate = _lastbtn->_DrawNodeVertices->Rotate + (_nextbtn->_DrawNodeVertices->Rotate - _lastbtn->_DrawNodeVertices->Rotate) / (_nextbtn->_col - _lastbtn->_col) * (_col - _lastbtn->_col);
+
 				}
 				DEL_FREE_OBJ(_nextbtn);
 			}
@@ -506,6 +514,7 @@ void ClickButton::UpdateVertices()
 			_DrawNodeVertices->_last_Width = _IN_Width;
 			_DrawNodeVertices->_last_ScallX = _IN_ScallX;
 			_DrawNodeVertices->_last_ScallY = _IN_ScallY;
+			_DrawNodeVertices->Rotate = _rotate;
 			_is_null = false;
 			//_DrawNodeVertices->updateRetlativeVertices(_x, _y, _sx, _sy); 
 		}
@@ -514,7 +523,7 @@ void ClickButton::UpdateVertices()
 		{
 			DEL_FREE_OBJ(_DrawNodeVertices);
 			_DrawNodeVertices = _lastbtn->_DrawNodeVertices->copy();
-			_DrawNodeVertices->Rotate = 0;
+			//_DrawNodeVertices->Rotate = 0;
 			_is_null = true;
 		}
 		//Ã»ÓÐ¾Í¹éÁã
@@ -582,6 +591,7 @@ void ClickButton::UpdateVertices()
 			_tempbtn->_Width = _Width;
 			_tempbtn = _QtEdit->_allClickButton.at(_row).at(_col - 1);
 			_tempbtn->_DrawNodeVertices->updateRetlativeVertices(_Width, _Height, _ScallX, _ScallY);
+			_tempbtn->_DrawNodeVertices->setRotateRelativeVertices(_tempbtn->_DrawNodeVertices->Relativevertices[0], _tempbtn->_DrawNodeVertices->Relativevertices[2], _tempbtn->_DrawNodeVertices->Rotate * (PI / 180));
 			//_tempbtn->_DrawNodeVertices->_last_ScallX = _ScallX;
 			//_tempbtn->_DrawNodeVertices->_last_ScallY = _ScallY;
 			//_tempbtn->_DrawNodeVertices->_last_Width = _Width;
@@ -600,6 +610,7 @@ void ClickButton::UpdateVertices()
 			_tempbtn->_Width = _Width;
 			_tempbtn = _QtEdit->_allClickButton.at(_row).at(_col - 1);
 			_tempbtn->_DrawNodeVertices->updateRetlativeVertices(_Width, _Height, _ScallX, _ScallY);
+			_tempbtn->_DrawNodeVertices->setRotateRelativeVertices(_tempbtn->_DrawNodeVertices->Relativevertices[0], _tempbtn->_DrawNodeVertices->Relativevertices[2], _tempbtn->_DrawNodeVertices->Rotate * (PI / 180));
 		}
 	}
 	else
@@ -611,6 +622,7 @@ void ClickButton::UpdateVertices()
 		_Height = _tempbtn->_Height;
 		_tempbtn = _QtEdit->_allClickButton.at(_row).at(_col - 1);
 		_tempbtn->_DrawNodeVertices->updateRetlativeVertices(_Width, _Height, _ScallX, _ScallY);
+		_tempbtn->_DrawNodeVertices->setRotateRelativeVertices(_tempbtn->_DrawNodeVertices->Relativevertices[0], _tempbtn->_DrawNodeVertices->Relativevertices[2], _tempbtn->_DrawNodeVertices->Rotate * (PI / 180));
 	}
 
 	

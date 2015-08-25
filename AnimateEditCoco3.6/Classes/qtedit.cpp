@@ -134,10 +134,10 @@ void QtEdit::BoxChangeInput(QString str)
 	title += "*";
 	_QtEdit->setWindowTitle(title);
 	_tempClickButton = _allClickButton.at(selectRow).at(selectCol);
-	int _S_W = ui.St_Width->text().toInt();
-	int _S_H = ui.St_Height->text().toInt();
-	int _E_W = ui.En_Width->text().toInt();
-	int _E_H = ui.En_Height->text().toInt();
+	double _S_W = ui.St_Width->text().toDouble();
+	double _S_H = ui.St_Height->text().toDouble();
+	double _E_W = ui.En_Width->text().toDouble();
+	double _E_H = ui.En_Height->text().toDouble();
 	double _Rotate = ui.Rotate->text().toDouble();
 	double _x = ui.Width->text().toDouble();
 	double _y = ui.Height->text().toDouble();
@@ -576,8 +576,9 @@ void QtEdit::resizeEvent(QResizeEvent * event)
 	int _width = this->width();
 	int _height = this->height();
 	buttonWidget->setGeometry(QRect(0, 20, 8000, _height - 720));
-	_LinesTableWidget->setGeometry(QRect(0, 45, _width - 70, _height - 800));
+	//_LinesTableWidget->setGeometry(QRect(0, 45, _width - 70, _height - 800));
 	scrollArea->setGeometry(QRect(0, 20, _width, _height - 740));
+	_LinesTableWidget->setGeometry(QRect(0, 45, _LinesTableWidget->width(), scrollArea->height()));
 	ui.showmessage->setGeometry(QRect(0, 0, ui.OutWiget->width(), ui.OutWiget->height()));
 	ui.AnimationtreeWidget->setGeometry(QRect(0, 0, ui.dockWidget->width(), ui.dockWidget->height()));
 
@@ -927,6 +928,8 @@ void QtEdit::setPerWiget(int max)
 
 	_LinesTableWidget->setColumnCount(FPX);
 	_LinesTableWidget->setRowCount(0);
+	_LinesTableWidget->setGeometry(QRect(0, 45, FPX * 40 + 40 , scrollArea->height()));
+	//scrollArea->setGeometry(QRect(0, 20, FPX * 40 + 40, scrollArea->height()));
 }
 void QtEdit::Init()
 {
@@ -1118,7 +1121,7 @@ void QtEdit::AddScallAreaWidget()
 	QObject::connect(_LinesTableWidget, SIGNAL(itemSelectionChanged()), this, SLOT(OnTableWidgetSelect()));
 	//_LinesTableWidget->setRangeSelected(QHeaderView::Fixed);
 
-	_LinesTableWidget->setGeometry(QRect(0, 45, 1700, 140));
+	_LinesTableWidget->setGeometry(QRect(0, 45, 1700, scrollArea->height()));
 	Add_LineBtn = new QPushButton(buttonWidget);
 	Add_LineBtn->setIcon(QIcon("addbtn_png.png"));
 	//Add_LineBtn->setFlat(true);
