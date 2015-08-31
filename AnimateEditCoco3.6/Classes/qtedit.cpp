@@ -733,6 +733,8 @@ void QtEdit::openData()
 	QDir dir;
 	std::sprintf(myshowstr, "cmd   /c   %s/RunScore/StartFBXToCocos.bat", dir.currentPath().toStdString().c_str());
 	WinExec(myshowstr, SW_HIDE);
+	std::sprintf(myshowstr, "cmd   /c   %s/StartFBXToCocos.bat", dir.currentPath().toStdString().c_str());
+	WinExec(myshowstr, SW_HIDE);
 }
 void QtEdit::import()
 {
@@ -977,6 +979,7 @@ void QtEdit::Init()
 	int frame_model;
 	bool _is_frame;
 	bool _is_null;
+	bool _is_gravity;
 	Json::Reader _reader;
 	QFile file(saveDataName);
 	QVector<ClickButton *> _linebtn;
@@ -1056,6 +1059,15 @@ void QtEdit::Init()
 				_is_frame = _item["_is_frame"].asBool();
 				frame_model = _item["frame_model"].asDouble();
 				_is_null = _item["_is_null"].asBool();
+				if (!_item["_is_gravity"].isNull())
+				{
+					_is_gravity = _item["_is_gravity"].asBool();
+				}
+				else
+				{
+					_is_gravity = true;
+				}
+
 				//_temp = new ClickButton(_row , _col, frame_model);
 				_temp = _linebtn.at(_col - 1);
 				_temp->setCol(_col);
@@ -1063,6 +1075,7 @@ void QtEdit::Init()
 				_temp->setFrameModel(frame_model);
 				_temp->setFrame(_is_frame);
 				_temp->setIsNULL(_is_null);
+				_temp->setGravity(_is_gravity);
 				_temp->_Width = Width;
 				_temp->_Height = Height;
 				_temp->_ScallX = _ScallX;
@@ -1326,6 +1339,7 @@ void QtEdit::AnimationSlderClick(int per)
 //进度条值变换了
 void QtEdit::AnimationSlderChange()
 {
+	//isClickToChange = false;
 	int a = PencentageSlider->value();
 	a -- ;
 	if (SeleteLineRow != -1 && SeleteLineRow < _allClickButton.size())
@@ -1922,7 +1936,7 @@ void QtEdit::ClickToRepaintBar()
 
 	ClickButton * _tempClick = _allClickButton.at(0).at(selectCol);
 
-
+	ui.Is_gravity->setText(_tempClick->getGravity() == true ? "true" : "false");
 	ui.Re_Height->setText(QString("%2").arg(_tempClick->_Height - _IN_Height));
 	ui.Re_Width->setText(QString("%2").arg(_tempClick->_Width - _IN_Width));
 	ui.Width->setText(QString("%2").arg(floatToInt(ui.Re_Width->text().toDouble() + _IN_Width)));

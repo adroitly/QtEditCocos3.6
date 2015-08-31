@@ -3,7 +3,7 @@
 #include "cocos2d.h"
 USING_NS_CC;
 using namespace std;
-class SpineIncl :public Ref
+class SpineIncl
 {
 public:
 	SpineIncl();

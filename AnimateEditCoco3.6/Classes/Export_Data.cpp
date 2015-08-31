@@ -76,6 +76,7 @@ void Export_Data::run()
 	int frame_model;
 	bool _is_frame;
 	bool _is_null;
+	bool _is_gravity;
 	for (k = 0; k < _animateLineButton.size(); k++)
 	{
 
@@ -122,6 +123,7 @@ void Export_Data::run()
 				}
 				frame_model = _temp->getFrameMode();
 				_is_null = _temp->isNULL();
+				_is_gravity = _temp->getGravity();
 				_item.clear();
 				_item["_ScallX"] = _ScallX;
 				_item["_ScallY"] = _ScallY;
@@ -141,6 +143,7 @@ void Export_Data::run()
 				_item["_is_frame"] = _is_frame;
 				_item["frame_model"] = frame_model;
 				_item["_is_null"] = _is_null;
+				_item["_is_gravity"] = _is_gravity;
 				_item_item[j] = _item;
 			}
 			ObjectItem["line_data"] = _item_item;
@@ -295,6 +298,7 @@ void Export_Data::Export_ByteData(QVector<MyLineVector *> & _animateLineButton, 
 					}
 					float rotation = _drawNodeVertices->Rotate;
 					bool is_null = _lineButton.at(i).at(j)->isNULL();
+					bool is_garvity = _lineButton.at(i).at(j)->getGravity();
 					if (!is_null)
 					{
 						is_null = true;
@@ -304,7 +308,7 @@ void Export_Data::Export_ByteData(QVector<MyLineVector *> & _animateLineButton, 
 						is_null = false;
 					}
 					char str[200];
-					std::sprintf(str, "time=%f  _x=%f  _y=%f  SX=%f SY=%f rota=%f isVi=%s", time, _x, _y, _my_ScallX, _my_ScallY, rotation, is_null == true ? "TRUE" : "FALSE");
+					std::sprintf(str, "time=%f  _x=%f  _y=%f  SX=%f SY=%f rota=%f isVi=%s , isGra = %s", time, _x, _y, _my_ScallX, _my_ScallY, rotation, is_null == true ? "TRUE" : "FALSE" , is_garvity == true ? "Gra" : "NO Gra");
 					QtEdit::getInstance()->ShowMsg(str);
 					_anima->writeFloat(time);
 					_anima->writeFloat(_x);
@@ -313,6 +317,7 @@ void Export_Data::Export_ByteData(QVector<MyLineVector *> & _animateLineButton, 
 					_anima->writeFloat(_my_ScallY);
 					_anima->writeFloat(rotation);
 					_anima->writeBool(is_null);
+					_anima->writeBool(is_garvity);
 				}
 			}
 		}

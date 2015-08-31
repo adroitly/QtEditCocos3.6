@@ -44,6 +44,7 @@ protected:
 	void DoDrawRectInit();
 	void DoDrawRectNow(DrawNode * & _DNode , Vec2  *&pos ,float apath = 1.0, int drawmode = -1);
 	void DrawTempRect();
+	void InitPosiupdate(float dt);
 	
 
 public:

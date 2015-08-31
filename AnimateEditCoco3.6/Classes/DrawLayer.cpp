@@ -34,6 +34,7 @@ bool DrawLayer::init()
 	listener->onTouchMoved = CC_CALLBACK_2(DrawLayer::onTouchMoved, this);
 	listener->onTouchEnded = CC_CALLBACK_2(DrawLayer::onTouchEnded, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+	this->schedule(schedule_selector(DrawLayer::InitPosiupdate), 1);
 	return true;
 }
 
@@ -132,7 +133,6 @@ void DrawLayer::UpdateToButton()
 
 void DrawLayer::DrawInitPosi()
 {
-	QtEdit::getInstance()->ShowMsg("INITDRAW");
 	PosiDraw = DrawNode::create();
 	Vec2 point1[4];
 	point1[0] = Vec2(_IN_Width - 2, _IN_Height - 2);
@@ -332,6 +332,13 @@ void DrawLayer::setSpritePosition(float with, float height, float sacllx, float 
 
 void DrawLayer::updateMySprite3D(std::string filename, std::string texture, std::string file_animation)
 {
+	int len = texture.find_last_of("/");
+	if (len == -1)
+	{
+		len = 0;
+	}
+	texture = texture.substr(0, len);
+	texture += "/tex.png";
 	VisiNode = Node::create();
 	mydt = 0.0;
 	_sprite = Sprite3D::create(filename, texture);
@@ -439,4 +446,10 @@ void DrawLayer::StartUpdate()
 void DrawLayer::EndUpdate()
 {
 	this->unschedule(schedule_selector(DrawLayer::ScheduMyUpdate));
+}
+
+void DrawLayer::InitPosiupdate(float dt)
+{
+	this->removeChild(PosiDraw);
+	DrawInitPosi();
 }

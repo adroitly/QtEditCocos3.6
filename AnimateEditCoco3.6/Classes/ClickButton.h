@@ -38,7 +38,8 @@ public:
 	inline int getLineID(){ return _line_ID; };
 	inline void setIsNULL(bool _null){ _is_null = _null; };
 	inline bool isNULL(){ return _is_null; };
-
+	inline bool getGravity(){ return _is_gravity; };
+	inline void setGravity(bool _gravity){ _is_gravity = _gravity;  };
 	void DoDelFrame();
 	void Click_ED(bool is_click = false);
 	ClickButton * copy();
@@ -52,6 +53,7 @@ private slots:
 	void DddAction();
 	void DelLine();
 	void DelFrame();
+	void DoGravity();
 	//void focusInEvent(QFocusEvent *);
 	//void focusOutEvent(QFocusEvent *);
 	void copyAction();
@@ -63,6 +65,7 @@ private:
 	bool _is_Frame = false;
 	int _frame_Model;
 	QAction * one_BoxAction;
+	QAction * Gra_Action;
 	QAction * delete_AllAction;
 	QAction * delete_LineAction;
 	QAction * free_BoxAction;
@@ -72,6 +75,7 @@ private:
 	QWidget * _parent;
 	int _line_ID;
 	bool _is_null = false;
+	bool _is_gravity = true;
 	bool KeyCtrl_Is_ON = false;
 	bool KeyC_Is_ON = false;
 	bool KeyV_Is_ON = false;

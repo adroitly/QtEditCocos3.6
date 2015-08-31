@@ -117,9 +117,37 @@ void ClickButton::mousePressEvent(QMouseEvent *e)
 				popMenu->addAction(one_BoxAction);
 				popMenu->addSeparator();
 
+				if (_is_gravity)
+				{
+					Gra_Action = new QAction(this);
+					Gra_Action->setText(QStringLiteral("删除当前重力因素"));
+					QObject::connect(Gra_Action, SIGNAL(triggered()), this, SLOT(DoGravity()));
+					popMenu->addAction(Gra_Action);
+				}
+				else
+				{
+					Gra_Action = new QAction(this);
+					Gra_Action->setText(QStringLiteral("增加当前重力因素"));
+					QObject::connect(Gra_Action, SIGNAL(triggered()), this, SLOT(DoGravity()));
+					popMenu->addAction(Gra_Action);
+				}
+
 				popMenu->setStyleSheet("QMenu{background-color:rgb(255,255,255);color:rgb(0, 0, 0);font:10pt ""宋体"";}"
 					"QMenu::item:selected{background-color:#CCDAE7;}");
 				popMenu->exec(QCursor::pos());
+			}
+			else
+			{
+				//popMenu = new QMenu(this);
+				//one_BoxAction = new QAction(this);
+				//one_BoxAction->setText(QStringLiteral("增加一个盒子"));
+				//QObject::connect(one_BoxAction, SIGNAL(triggered()), this, SLOT(DddAction()));
+				//popMenu->addAction(one_BoxAction);
+				//popMenu->addSeparator();
+
+				//popMenu->setStyleSheet("QMenu{background-color:rgb(255,255,255);color:rgb(0, 0, 0);font:10pt ""宋体"";}"
+				//	"QMenu::item:selected{background-color:#CCDAE7;}");
+				//popMenu->exec(QCursor::pos());
 			}
 			return;
 		}
@@ -197,9 +225,16 @@ void ClickButton::mousePressEvent(QMouseEvent *e)
 		}
 		if (_row != 0)
 		{
-			if (_QtEdit->selectRow != -1 && _QtEdit->selectRow < _QtEdit->_allClickButton.size() && _QtEdit->selectCol < _QtEdit->_allClickButton.at(0).size())
+			//if (_QtEdit->selectRow != -1 && _QtEdit->selectRow < _QtEdit->_allClickButton.size() && _QtEdit->selectCol < _QtEdit->_allClickButton.at(0).size())
+			//{
+				//_QtEdit->_allClickButton.at(_QtEdit->selectRow).at(_QtEdit->selectCol)->Click_ED(false);
+			//}
+			if (_QtEdit->_allClickButton.size() > 0 && _QtEdit->selectCol < _QtEdit->_allClickButton.at(0).size())
 			{
-				_QtEdit->_allClickButton.at(_QtEdit->selectRow).at(_QtEdit->selectCol)->Click_ED(false);
+				for (int i = 0; i < _QtEdit->_allClickButton.size(); i++)
+				{
+					_QtEdit->_allClickButton.at(i).at(_QtEdit->selectCol)->Click_ED(false);
+				}
 			}
 			Click_ED(true);
 		}
@@ -216,6 +251,7 @@ void ClickButton::DelAction()
 	str += "*";
 	_QtEdit->setWindowTitle(str);
 	_is_Frame = false;
+	_is_gravity = true;
 	setStyleSheet("background: transparent;border:0px");
 	_DrawNodeVertices->reset();
 	int i;
@@ -244,6 +280,32 @@ void ClickButton::DddAction()
 	_QtEdit->setWindowTitle(str);
 	setButtonColor();
 	_is_null = false;
+	if (_QtEdit->selectRow != -1 && _QtEdit->selectRow < _QtEdit->_allClickButton.size() && _QtEdit->selectCol < _QtEdit->_allClickButton.at(0).size())
+	{
+		_QtEdit->_allClickButton.at(_QtEdit->selectRow).at(_QtEdit->selectCol)->Click_ED(false);
+	}
+	Click_ED(true);
+}
+
+void ClickButton::DoGravity()
+{
+	if (_is_gravity)
+	{
+		_is_gravity = false;
+	}
+	else
+	{
+		_is_gravity = true;
+	}
+	if (_QtEdit->_allClickButton.size() > 0 && _QtEdit->selectCol < _QtEdit->_allClickButton.at(0).size())
+	{
+		for (int i = 0; i < _QtEdit->_allClickButton.size(); i++)
+		{
+			_QtEdit->_allClickButton.at(i).at(_QtEdit->selectCol)->Click_ED(false);
+		}
+	}
+	_QtEdit = QtEdit::getInstance();
+	_QtEdit->setWindowTitle(_QtEdit->windowTitle().split("*").at(0) + "*");
 	Click_ED(true);
 }
 
@@ -400,6 +462,7 @@ ClickButton * ClickButton::copy()
 	ClickButton * _copy = new ClickButton(_row, _col, _frame_Model, _parent);
 	_copy->_is_Frame = _is_Frame;
 	_copy->_is_null = _is_null;
+	_copy->_is_gravity = _is_gravity;
 	_copy->_col = _col;
 	_copy->_row = _row;
 	_copy->_frame_Model = _frame_Model;
@@ -453,6 +516,14 @@ void ClickButton::UpdateVertices()
 				}
 			}
 		}
+		if (_lastbtn)
+		{
+			_is_gravity = _lastbtn->_is_gravity;
+		}
+		else
+		{
+			_is_gravity = true;
+		}
 		//如果有上一个
 		if (_lastbtn && !_lastbtn->isNULL())
 		{
@@ -466,7 +537,10 @@ void ClickButton::UpdateVertices()
 				_DrawNodeVertices->RelativeRotateVertices[i].set(_lastbtn->_DrawNodeVertices->RelativeRotateVertices[i]);;
 				_DrawNodeVertices->RotateVertices[i].set(_lastbtn->_DrawNodeVertices->RotateVertices[i]);
 			}
-			if (_nextbtn && !_nextbtn->isNULL())
+			if (_frame_Model == 1)
+			{
+			}
+			else if (_nextbtn && !_nextbtn->isNULL())
 			{
 				_nextbtn = _nextbtn->copy();
 				_nextbtn->_DrawNodeVertices->updateRetlativeVertices(_IN_Width, _IN_Height, _IN_ScallX, _IN_ScallY);
