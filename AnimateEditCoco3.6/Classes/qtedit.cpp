@@ -69,6 +69,7 @@ QtEdit::QtEdit(QWidget *parent)
 	AddScallAreaWidget();
 }
 
+//槽函数
 void QtEdit::AddCao()
 {
 	QObject::connect(ui.importaction, SIGNAL(triggered()), this, SLOT(import()));
@@ -133,6 +134,7 @@ void QtEdit::ShowMsg(std::string str)
 	ui.showmessage->setTextCursor(cursor);
 	
 }
+//有输入事件
 void QtEdit::BoxChangeInput(QString str)
 {
 	if (_allClickButton.size() <= 0)
@@ -177,7 +179,7 @@ void QtEdit::BoxChangeInput(QString str)
 	ClickToRepaintBar();
 
 }
-
+//鼠标滚动事件
 void QtEdit::wheelEvent(QWheelEvent *e)
 {
 	//int numDegrees = e->delta() / 8;//滚动的角度，*8就是鼠标滚动的距离
@@ -322,17 +324,19 @@ void QtEdit::wheelEvent(QWheelEvent *e)
 		pu = 1;
 	}
 }
+//废弃
 int QtEdit::getCurrIndex(QString &str)
 {
 	int a;
 
 	return a;
 }
+//废弃
 void QtEdit::setRePosition(int a)
 {
 
 }
-
+//保存操作
 void QtEdit::saveAllData()
 {
 	if (_animateLineButton.size() > 0 )
@@ -346,6 +350,7 @@ void QtEdit::saveAllData()
 	}
 	
 }
+//导入Spine操作
 void QtEdit::importSpine()
 {
 	QString file_name;
@@ -482,6 +487,7 @@ void QtEdit::importSpine()
 		//点的是取消
 	}
 }
+//到处二进制操作
 void QtEdit::export_byteData()
 {
 	if (_animateLineButton.size() <= 0)
@@ -524,6 +530,7 @@ void QtEdit::deletePro()
 {
 	DEL_FREE_OBJ(scrollArea->parent());
 }
+//关闭事件
 void QtEdit::closeEvent(QCloseEvent *event)
 {
 	int i;
@@ -581,6 +588,7 @@ void QtEdit::closeEvent(QCloseEvent *event)
 		event->accept();  //接受退出信号，程序退出
 	}
 }
+//窗口大小有变化
 void QtEdit::resizeEvent(QResizeEvent * event)
 {
 	int _width = this->width();
@@ -605,6 +613,7 @@ void QtEdit::setGLView(QWidget *glWidget)
  		setCentralWidget(ui.SceneWidget);
 	}
 }
+//保存SQLite和读取上次保存的地址文件
 void QtEdit::MySQLite(bool is_Update /* = false */, QString data /* = 0  */, QString col_name /* = "" */)
 {
 	int i;
@@ -672,6 +681,7 @@ void QtEdit::MySQLite(bool is_Update /* = false */, QString data /* = 0  */, QSt
 		}
 	}
 }
+//导出JSON
 void QtEdit::exportData()
 {
 	//ShowMsg("Export");
@@ -709,12 +719,14 @@ void QtEdit::exportData()
 	}
 	
 }
+//相对的盒子有输入
 void QtEdit::ReChangeInput()
 {
 	ui.Width->setText(QString("%2").arg(ui.Re_Width->text().toInt() + _IN_Width));
 	ui.Height->setText(QString("%2").arg(ui.Re_Height->text().toInt() + _IN_Height));
 	ChangeInput();
 }
+//help
 void QtEdit::ActionHelp()
 {
 	//QMessageBox::aboutQt(NULL, "About Qt");
@@ -727,7 +739,7 @@ void QtEdit::ActionHelp()
 	showabout += "\nCopyRight(©) killer & TimeNew Studios";
 	QMessageBox::about(NULL, "About Edit", codec->toUnicode(showabout.c_str()));
 }
-
+//转换操作
 void QtEdit::openData()
 {
 	QDir dir;
@@ -736,6 +748,7 @@ void QtEdit::openData()
 	std::sprintf(myshowstr, "cmd   /c   %s/StartFBXToCocos.bat", dir.currentPath().toStdString().c_str());
 	WinExec(myshowstr, SW_HIDE);
 }
+//导入c3b,c3t
 void QtEdit::import()
 {
 	_DrawLayer = DrawLayer::getinstance();
@@ -887,7 +900,7 @@ void QtEdit::import()
 		//点的是取消
 	}
 }
-
+//检查看看当前保存的动作是否有变动
 void QtEdit::CheckAnimation()
 {
 	int i, j;
@@ -929,7 +942,7 @@ void QtEdit::CheckAnimation()
 		}
 	}
 }
-
+//进度条初始化
 void QtEdit::setPerWiget(int max)
 {
 	SeleteLineRow = -1;
@@ -943,6 +956,7 @@ void QtEdit::setPerWiget(int max)
 	_LinesTableWidget->setGeometry(QRect(0, 45, FPX * 40 + 40 , scrollArea->height()));
 	//scrollArea->setGeometry(QRect(0, 20, FPX * 40 + 40, scrollArea->height()));
 }
+//读取保存的文件
 void QtEdit::Init()
 {
 	Json::Value root_json;
@@ -1106,7 +1120,7 @@ void QtEdit::SlderButtonClick()
 
 	
 }
-
+//控制的窗口控件
 void QtEdit::AddScallAreaWidget()
 {
 	_now_linesize = 1;
@@ -1162,7 +1176,7 @@ void QtEdit::showmessageChange()
 	
 	mymsg = ui.showmessage->toPlainText().toStdString();
 }
-
+//X,Y,Z旋转的输入
 void QtEdit::Rotate3D_ChangeINput()
 {
 	if (SpiteS_Model == 1)
@@ -1178,6 +1192,7 @@ void QtEdit::Rotate3D_ChangeINput()
 		}
 	}
 }
+//盒子
 void QtEdit::BoxLengthChangeInput()
 {
 	if (_allClickButton.size() > 0)
@@ -1216,7 +1231,7 @@ void QtEdit::BoxLengthChangeInput()
 		ClickToRepaintBar();
 	}
 }
-
+//盒子中点位置变换
 void QtEdit::BoxMidPosiChangeInput()
 {
 	if (_allClickButton.size() > 0)
@@ -1420,7 +1435,7 @@ void QtEdit::keyReleaseEvent(QKeyEvent *e)
 		KeyS_is_ON = false;
 	}
 }
-
+//动作的增加
 void QtEdit::AddAnimationList(QString full_path_name)
 {
 	
@@ -1717,7 +1732,7 @@ void QtEdit::deleteDrawnode()
 	_QtEdit->setWindowTitle(_QtEdit->windowTitle().split("*").at(0) + "*");
 	int i;
 }
-
+//鼠标右键旋转
 void QtEdit::mouseReleaseEvent(QMouseEvent *e)
 {
 	if ((e->buttons() & Qt::RightButton))
@@ -1782,7 +1797,7 @@ void QtEdit::setParent(HWND parent)
 {
 	m_Parent = parent;
 }
-
+//增加时间线
 void QtEdit::AddTimeLine(int _linemodel)
 {
 	_lineVerHeader << getHeadName(_linemodel);
@@ -1804,7 +1819,7 @@ void QtEdit::AddTimeLine(int _linemodel)
 	_allClickButton.push_back(_temp_line);
 	_LinesTableWidget->setVerticalHeaderLabels(_lineVerHeader);
 }
-
+//增加按钮操作
 void QtEdit::AddLineButton_Click()
 {
 	if (_allClickButton.size() > 0)
@@ -1843,6 +1858,7 @@ void QtEdit::AddLineButton_Click()
 	}
 	
 }
+//删除时间线
 
 void QtEdit::DeleteLine(int _row)
 {
@@ -1878,6 +1894,7 @@ void QtEdit::DeleteLine(int _row)
 	}
 }
 
+//时间线表格
 void QtEdit::OnTableWidgetSelect()
 {
 
@@ -2014,7 +2031,7 @@ void QtEdit::ShowMessageInBar(int argc ,...)
 	va_end(pArg);
 	ui.showmessage->setPlainText(mymsg.c_str());
 }
-
+//显示界面的变换（人物)
 void QtEdit::SpriteChange()
 {
 	if (1 == SpiteS_Model)
@@ -2033,7 +2050,7 @@ void QtEdit::SpriteChange()
 	}
 	
 }
-
+//增加帧数的初始化操作
 void QtEdit::Init_ClickButton(int col)
 {
 	int _len, i;
@@ -2132,7 +2149,7 @@ void QtEdit::Init_ClickButton(int col)
 	
 	_LinesTableWidget->setVerticalHeaderLabels(_lineVerHeader);
 }
-
+//根据model获取表头的名字
 QString QtEdit::getHeadName(int _model)
 {
 	QString str;
@@ -2178,7 +2195,7 @@ void QtEdit::Update_DrawLayer()
 {
 	//_DrawLayer = DrawLayer::getinstance();
 }
-
+//数据保存两位有效数据
 double QtEdit::doubleToDoubletwo(double &f)
 {
 	char str[20];
